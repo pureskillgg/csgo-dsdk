@@ -69,11 +69,11 @@ makenew () {
   find_replace "s/2020 Evan Sosenko/2020 ${mk_author}/g"
   find_replace "s/Evan Sosenko/${mk_author}/g"
   find_replace "s/razorx@evansosenko\.com/${mk_email}/g"
-  find_replace "s/makenew\/pypackage/${mk_user}\/${mk_repo}/g"
-  find_replace "s/makenew-pypackage/${mk_slug}/g"
-  find_replace "s/makenew_pypackage/${mk_module}/g"
+  find_replace "s/pureskillgg\/makenew-pypackage/${mk_user}\/${mk_repo}/g"
+  find_replace "s/pureskillgg-makenew-pypackage/${mk_slug}/g"
+  find_replace "s/pureskillgg_makenew_pypackage/${mk_module}/g"
 
-  git mv makenew_pypackage ${mk_module}
+  git mv pureskillgg_makenew_pypackage ${mk_module}
 
   echo
   echo 'Replacing boilerplate.'

@@ -11,14 +11,14 @@ format:
 	@poetry run black .
 
 lint:
-	@poetry run pylint ./makenew_pypackage
+	@poetry run pylint ./pureskillgg_makenew_pypackage
 	@poetry run black --check .
 
 publish:
 	@poetry run twine upload --skip-existing dist/*
 
 test:
-	@poetry run pytest --inc --cov=./makenew_pypackage
+	@poetry run pytest --inc --cov=./pureskillgg_makenew_pypackage
 
 watch:
 	@poetry run ptw

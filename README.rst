@@ -3,11 +3,11 @@ Python Package Skeleton
 
 |PyPI| |GitHub Actions|
 
-.. |PyPI| image:: https://img.shields.io/pypi/v/makenew-pypackage.svg
-   :target: https://pypi.python.org/pypi/makenew-pypackage
+.. |PyPI| image:: https://img.shields.io/pypi/v/pureskillgg-makenew-pypackage.svg
+   :target: https://pypi.python.org/pypi/pureskillgg-makenew-pypackage
    :alt: PyPI
-.. |GitHub Actions| image:: https://github.com/makenew/pypackage/workflows/main/badge.svg
-   :target: https://github.com/makenew/pypackage/actions
+.. |GitHub Actions| image:: https://github.com/pureskillgg/makenew-pypackage/workflows/main/badge.svg
+   :target: https://github.com/pureskillgg/makenew-pypackage/actions
    :alt: GitHub Actions
 
 Package skeleton for an Python module.
@@ -51,11 +51,11 @@ Bootstrapping a New Project
 
    ::
 
-       $ git clone --single-branch https://github.com/makenew/pypackage.git new-pypackage
-       $ cd new-pypackage
+       $ git clone --single-branch https://github.com/pureskillgg/makenew-pypackage.git new-makenew-pypackage
+       $ cd new-makenew-pypackage
 
    Optionally, reset to the latest
-   `release <https://github.com/makenew/pypackage/releases>`__ with
+   `release <https://github.com/pureskillgg/makenew-pypackage/releases>`__ with
 
    ::
 
@@ -78,7 +78,7 @@ Bootstrapping a New Project
 
      $ git diff --cached
      $ git commit -m "Replace makenew boilerplate"
-     $ git remote add origin git@github.com:<user>/<new-pypackage>.git
+     $ git remote add origin git@github.com:<user>/<new-makenew-pypackage>.git
      $ git push -u origin master
 
 6. Ensure the GitHub action passes,
@@ -109,7 +109,7 @@ Otherwise, add this as a new remote with
 
 ::
 
-    $ git remote add upstream git@github.com:makenew/pypackage.git
+    $ git remote add upstream git@github.com:pureskillgg/makenew-pypackage.git
 
 You can then fetch and merge changes with
 
@@ -124,21 +124,21 @@ Changelog
 Note that ``CHANGELOG.md`` is just a template for this skeleton. The
 actual changes for this project are documented in the commit history and
 summarized under
-`Releases <https://github.com/makenew/pypackage/releases>`__.
+`Releases <https://github.com/pureskillgg/makenew-pypackage/releases>`__.
 
 Installation
 ------------
 
 This package is registered on the `Python Package Index (PyPI)`_
-as makenew_pypackage_.
+as pureskillgg_makenew_pypackage_.
 
 Install it with
 
 ::
 
-    $ poetry install makenew_pypackage
+    $ poetry install pureskillgg_makenew_pypackage
 
-.. _makenew_pypackage: https://pypi.python.org/pypi/makenew-pypackage
+.. _pureskillgg_makenew_pypackage: https://pypi.python.org/pypi/pureskillgg-makenew-pypackage
 .. _Python Package Index (PyPI): https://pypi.python.org/
 
 Development and Testing
@@ -149,8 +149,8 @@ Quickstart
 
 ::
 
-    $ git clone https://github.com/makenew/pypackage.git
-    $ cd pypackage
+    $ git clone https://github.com/pureskillgg/makenew-pypackage.git
+    $ cd makenew-pypackage
     $ poetry install
 
 Run each command below in a separate terminal window:
@@ -169,9 +169,9 @@ Clone the project with
 
 ::
 
-    $ git clone https://github.com/makenew/pypackage.git
+    $ git clone https://github.com/pureskillgg/makenew-pypackage.git
 
-.. _source code: https://github.com/makenew/pypackage
+.. _source code: https://github.com/pureskillgg/makenew-pypackage
 
 Requirements
 ~~~~~~~~~~~~
@@ -220,7 +220,7 @@ Push the created git tag which will trigger a GitHub action.
 Publishing may be triggered using on the web
 using a `workflow_dispatch on GitHub Actions`_.
 
-.. _workflow_dispatch on GitHub Actions: https://github.com/makenew/pypackage/actions?query=workflow%3Aversion
+.. _workflow_dispatch on GitHub Actions: https://github.com/pureskillgg/makenew-pypackage/actions?query=workflow%3Aversion
 
 GitHub Actions
 --------------
@@ -257,7 +257,7 @@ Please submit and comment on bug reports and feature requests.
 
 To submit a patch:
 
-1. Fork it (https://github.com/makenew/pypackage/fork).
+1. Fork it (https://github.com/pureskillgg/makenew-pypackage/fork).
 2. Create your feature branch (`git checkout -b my-new-feature`).
 3. Make changes.
 4. Commit your changes (`git commit -am 'Add some feature'`).
