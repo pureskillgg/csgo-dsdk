@@ -51,16 +51,19 @@ makenew () {
   echo 'There are no defaults.'
   echo 'Example values are shown in parentheses.'
   read -p '> Package title (My Package): ' mk_title
-  read -p '> Package name (my-package): ' mk_slug
-  read -p '> Module name (my_package): ' mk_module
+  read -p '> Package name (my-package): ' mk_name
+  read -p '> Module name (my_package): ' mk_mod
   read -p '> Package description: ' mk_description
   read -p '> Author name (Linus Torvalds): ' mk_author
   read -p '> Author email (linus@example.com): ' mk_email
-  read -p '> GitHub user or organization name (my-user): ' mk_user
   read -p '> GitHub repository name (my-repo): ' mk_repo
 
-  sed_delete README.rst '18,127d'
-  sed_insert README.rst '18i' 'TODO'
+  sed_delete README.rst '15,124d'
+  sed_insert README.rst '15i' 'TODO'
+
+  mk_user="pureskillgg"
+  mk_slug="${mk_user}-${mk_name}"
+  mk_module="${mk_user}_${mk_mod}"
 
   find_replace "s/^version = \".*/version = \"0.0.0\"/g"
   find_replace "s/current_version = .*/current_version = 0.0.0/g"
@@ -68,7 +71,7 @@ makenew () {
   find_replace "s/Package skeleton for a python module\./${mk_description}/g"
   find_replace "s/2020 Evan Sosenko/2020 ${mk_author}/g"
   find_replace "s/Evan Sosenko/${mk_author}/g"
-  find_replace "s/razorx@evansosenko\.com/${mk_email}/g"
+  find_replace "s/evan@pureskill\.gg/${mk_email}/g"
   find_replace "s/pureskillgg\/makenew-pypackage/${mk_user}\/${mk_repo}/g"
   find_replace "s/pureskillgg-makenew-pypackage/${mk_slug}/g"
   find_replace "s/pureskillgg_makenew_pypackage/${mk_module}/g"
