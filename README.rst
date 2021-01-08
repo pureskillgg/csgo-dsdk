@@ -267,7 +267,7 @@ To submit a patch:
 License
 -------
 
-This Python package is licensed under the MIT license.
+This Python package is Copyright (c) 2019-2021 FPS Critic, Inc.
 
 Warranty
 --------
