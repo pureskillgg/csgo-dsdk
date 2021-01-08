@@ -2,7 +2,7 @@
 name = "pureskillgg-makenew-pypackage"
 version = "0.0.0"
 description = "Package skeleton for a python module."
-authors = ["Evan Sosenko <razorx@evansosenko.com>"]
+authors = ["Evan Sosenko <evan@pureskill.gg>"]
 license = "SEE LICENSE IN LICENSE.txt"
 readme = "README.rst"
 homepage = "https://github.com/pureskillgg/makenew-pypackage"
