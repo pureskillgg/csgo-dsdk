@@ -1,11 +1,8 @@
 Python Package Skeleton
 =======================
 
-|PyPI| |GitHub Actions|
+|GitHub Actions|
 
-.. |PyPI| image:: https://img.shields.io/pypi/v/pureskillgg-makenew-pypackage.svg
-   :target: https://pypi.python.org/pypi/pureskillgg-makenew-pypackage
-   :alt: PyPI
 .. |GitHub Actions| image:: https://github.com/pureskillgg/makenew-pypackage/workflows/main/badge.svg
    :target: https://github.com/pureskillgg/makenew-pypackage/actions
    :alt: GitHub Actions
@@ -22,7 +19,7 @@ Bootstrap a new Python_ package in less than a minute.
 Features
 ~~~~~~~~
 
-- Publishing to PyPI_.
+- Publishing to JFrog_.
 - Secure dependency management with Poetry_.
 - Linting with Pylint_.
 - Uncompromising code formatting with Black_.
@@ -38,7 +35,7 @@ Features
 .. _EditorConfig: https://editorconfig.org/
 .. _GitHub Actions: https://github.com/features/actions
 .. _Keep a CHANGELOG: https://keepachangelog.com/
-.. _PyPI: https://pypi.python.org/pypi
+.. _JFrog: https://pureskillgg.jfrog.io/
 .. _Pylint: https://www.pylint.org/
 .. _Shields.io: https://shields.io/
 .. _pytest: https://docs.pytest.org/
@@ -129,8 +126,7 @@ summarized under
 Installation
 ------------
 
-This package is registered on the `Python Package Index (PyPI)`_
-as pureskillgg_makenew_pypackage_.
+This package is registered on `JFrog Artifactory`_.
 
 Install it with
 
@@ -138,8 +134,7 @@ Install it with
 
     $ poetry install pureskillgg_makenew_pypackage
 
-.. _pureskillgg_makenew_pypackage: https://pypi.python.org/pypi/pureskillgg-makenew-pypackage
-.. _Python Package Index (PyPI): https://pypi.python.org/
+.. _JFrog Artifactory: https://pureskillgg.jfrog.io/
 
 Development and Testing
 -----------------------
@@ -229,7 +224,8 @@ GitHub Actions
 
 The following repository secrets must be set on GitHub Actions.
 
-- ``PYPI_API_TOKEN``: API token for publishing on PyPI.
+- ``JFROG_USER``: User name for publishing on JFrog.
+- ``JFROG_API_KEY``: API token for publishing on JFrog.
 
 These must be set manually.
 

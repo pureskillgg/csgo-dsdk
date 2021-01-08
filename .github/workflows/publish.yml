@@ -7,7 +7,7 @@ on:
       - v*
 
 jobs:
-  pypi:
+  jfrog:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -31,5 +31,5 @@ jobs:
       - name: Publish
         run: make publish
         env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+          TWINE_USERNAME: ${{ secrets.JFROG_USER }}
+          TWINE_PASSWORD: ${{ secrets.JFROG_API_KEY }}

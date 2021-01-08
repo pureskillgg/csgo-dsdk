@@ -15,7 +15,7 @@ lint:
 	@poetry run black --check .
 
 publish:
-	@poetry run twine upload --skip-existing dist/*
+	@poetry run twine upload --skip-existing --repository https://pureskillgg.jfrog.io/artifactory/api/pypi/pureskillgg-makenew-pypackage dist/*
 
 test:
 	@poetry run pytest --inc --cov=./pureskillgg_makenew_pypackage
