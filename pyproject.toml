@@ -9,6 +9,10 @@ homepage = "https://github.com/pureskillgg/makenew-pypackage"
 repository = "https://github.com/pureskillgg/makenew-pypackage"
 include = ['poetry.lock']
 
+[[tool.poetry.source]]
+name = "pureskillgg"
+url = "https://pureskillgg.jfrog.io/artifactory/api/pypi/*"
+
 [tool.poetry.dependencies]
 python = "3.9.1"
 
