@@ -4,7 +4,12 @@ name: main
 on:
   push:
     branches:
-      - '**'
+      - master
+      - 'ver/**'
+  pull_request:
+    branches:
+      - master
+      - 'ver/**'
 
 jobs:
   test:
