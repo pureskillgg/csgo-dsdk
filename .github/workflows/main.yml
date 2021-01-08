@@ -31,6 +31,9 @@ jobs:
           restore-keys: ${{ runner.os }}-poetry-
       - name: Install dependencies
         run: poetry install
+        env:
+          POETRY_HTTP_BASIC_PURESKILLGG_USERNAME: ${{ secrets.JFROG_USER }}
+          POETRY_HTTP_BASIC_PURESKILLGG_PASSWORD: ${{ secrets.JFROG_API_KEY }}
       - name: Test
         run: make test
   lint:
@@ -52,6 +55,9 @@ jobs:
           restore-keys: ${{ runner.os }}-poetry-
       - name: Install dependencies
         run: poetry install
+        env:
+          POETRY_HTTP_BASIC_PURESKILLGG_USERNAME: ${{ secrets.JFROG_USER }}
+          POETRY_HTTP_BASIC_PURESKILLGG_PASSWORD: ${{ secrets.JFROG_API_KEY }}
       - name: Lint
         run: make lint
   build:
@@ -73,5 +79,8 @@ jobs:
           restore-keys: ${{ runner.os }}-poetry-
       - name: Install dependencies
         run: poetry install
+        env:
+          POETRY_HTTP_BASIC_PURESKILLGG_USERNAME: ${{ secrets.JFROG_USER }}
+          POETRY_HTTP_BASIC_PURESKILLGG_PASSWORD: ${{ secrets.JFROG_API_KEY }}
       - name: Build
         run: make build
