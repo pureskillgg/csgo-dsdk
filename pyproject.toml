@@ -11,7 +11,7 @@ include = ['poetry.lock']
 
 [[tool.poetry.source]]
 name = "pureskillgg"
-url = "https://pureskillgg.jfrog.io/artifactory/api/pypi/*"
+url = "https://pureskillgg.jfrog.io/artifactory/api/pypi/private/simple"
 
 [tool.poetry.dependencies]
 python = "3.9.1"
