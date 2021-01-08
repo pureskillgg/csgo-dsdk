@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pureskillgg-makenew-pypackage"
-version = "0.0.4"
+version = "1.0.0"
 description = "Package skeleton for a python module."
 authors = ["Evan Sosenko <evan@pureskill.gg>"]
 license = "SEE LICENSE IN LICENSE.txt"
