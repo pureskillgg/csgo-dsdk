@@ -54,8 +54,6 @@ makenew () {
   read -p '> Package name (my-package): ' mk_name
   read -p '> Module name (my_package): ' mk_mod
   read -p '> Package description: ' mk_description
-  read -p '> Author name (Linus Torvalds): ' mk_author
-  read -p '> Author email (linus@example.com): ' mk_email
   read -p '> GitHub repository name (my-repo): ' mk_repo
 
   sed_delete README.rst '15,124d'
@@ -69,9 +67,6 @@ makenew () {
   find_replace "s/current_version = .*/current_version = 0.0.0/g"
   find_replace "s/Python Package Skeleton/${mk_title}/g"
   find_replace "s/Package skeleton for a python module\./${mk_description}/g"
-  find_replace "s/2020 Evan Sosenko/2020 ${mk_author}/g"
-  find_replace "s/Evan Sosenko/${mk_author}/g"
-  find_replace "s/evan@pureskill\.gg/${mk_email}/g"
   find_replace "s/pureskillgg\/makenew-pypackage/${mk_user}\/${mk_repo}/g"
   find_replace "s/pureskillgg-makenew-pypackage/${mk_slug}/g"
   find_replace "s/pureskillgg_makenew_pypackage/${mk_module}/g"
