@@ -23,7 +23,7 @@ Install it with
 
 ::
 
-    $ poetry install pureskillgg_csgo_dsdk
+    $ poetry add pureskillgg_csgo_dsdk
 
 .. _JFrog Artifactory: https://pureskillgg.jfrog.io/
 
