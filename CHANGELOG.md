@@ -7,4 +7,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/pureskillgg/makenew-pypackage/compare/v0.0.0...HEAD
+[Unreleased]: https://github.com/pureskillgg/csgo-dsdk/compare/v0.0.0...HEAD

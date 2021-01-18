@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "pureskillgg-makenew-pypackage"
-version = "1.0.1"
-description = "Package skeleton for a python module."
+name = "pureskillgg-csgo-dsdk"
+version = "0.0.0"
+description = "Python Data Science Development Kit for CS:GO."
 authors = ["PureSkill.gg <secure@pureskill.gg>"]
 license = "SEE LICENSE IN LICENSE.txt"
 readme = "README.rst"
-homepage = "https://github.com/pureskillgg/makenew-pypackage"
-repository = "https://github.com/pureskillgg/makenew-pypackage"
+homepage = "https://github.com/pureskillgg/csgo-dsdk"
+repository = "https://github.com/pureskillgg/csgo-dsdk"
 include = ['poetry.lock']
 
 [[tool.poetry.source]]
