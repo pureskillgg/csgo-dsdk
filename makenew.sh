@@ -69,6 +69,7 @@ makenew () {
   find_replace "s/pureskillgg\/makenew-pypackage/${mk_user}\/${mk_slug}/g"
   find_replace "s/pureskillgg-makenew-pypackage/${mk_pkg}/g"
   find_replace "s/pureskillgg_makenew_pypackage/${mk_module}/g"
+  find_replace "s/makenew-pypackage/${mk_slug}/g"
 
   git mv pureskillgg_makenew_pypackage ${mk_module}
 
