@@ -1,3 +1,3 @@
 """
-Python package skeleton.
+Package skeleton for a Python module.
 """

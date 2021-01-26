@@ -7,7 +7,7 @@ Python Package Skeleton
    :target: https://github.com/pureskillgg/makenew-pypackage/actions
    :alt: GitHub Actions
 
-Package skeleton for an Python module.
+Package skeleton for a Python module.
 
 Description
 -----------
@@ -132,7 +132,7 @@ Install it with
 
 ::
 
-    $ poetry install pureskillgg_makenew_pypackage
+    $ poetry add pureskillgg_makenew_pypackage
 
 .. _JFrog Artifactory: https://pureskillgg.jfrog.io/
 

@@ -65,7 +65,7 @@ makenew () {
   find_replace "s/^version = \".*/version = \"0.0.0\"/g"
   find_replace "s/current_version = .*/current_version = 0.0.0/g"
   find_replace "s/Python Package Skeleton/${mk_title}/g"
-  find_replace "s/Package skeleton for a python module\./${mk_description}/g"
+  find_replace "s/Package skeleton for a Python module\./${mk_description}/g"
   find_replace "s/pureskillgg\/makenew-pypackage/${mk_user}\/${mk_slug}/g"
   find_replace "s/pureskillgg-makenew-pypackage/${mk_pkg}/g"
   find_replace "s/pureskillgg_makenew_pypackage/${mk_module}/g"
