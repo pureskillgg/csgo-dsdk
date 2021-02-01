@@ -283,7 +283,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "packaging"
-version = "20.8"
+version = "20.9"
 description = "Core utilities for Python packages"
 category = "dev"
 optional = false
@@ -642,8 +642,8 @@ python-versions = "*"
 
 [metadata]
 lock-version = "1.1"
-python-versions = "~3.8.6"
-content-hash = "53613990ec5b561a6a8fe973e1b0902584e1928a55b2c080f0b9ca705caab6d6"
+python-versions = "3.8.6"
+content-hash = "d580eab6f5291aa79752595d0dfd91c504e1d887dbe2ec88cf869fab3241da13"
 
 [metadata.files]
 appdirs = [
@@ -864,8 +864,8 @@ more-itertools = [
     {file = "more_itertools-8.6.0-py3-none-any.whl", hash = "sha256:8e1a2a43b2f2727425f2b5839587ae37093f19153dc26c0927d1048ff6557330"},
 ]
 packaging = [
-    {file = "packaging-20.8-py2.py3-none-any.whl", hash = "sha256:24e0da08660a87484d1602c30bb4902d74816b6985b93de36926f5bc95741858"},
-    {file = "packaging-20.8.tar.gz", hash = "sha256:78598185a7008a470d64526a8059de9aaa449238f280fc9eb6b13ba6c4109093"},
+    {file = "packaging-20.9-py2.py3-none-any.whl", hash = "sha256:67714da7f7bc052e064859c05c595155bd1ee9f69f76557e21f051443c20947a"},
+    {file = "packaging-20.9.tar.gz", hash = "sha256:5b327ac1320dc863dca72f4514ecc086f31186744b84a230374cc1fd776feae5"},
 ]
 pathspec = [
     {file = "pathspec-0.8.1-py2.py3-none-any.whl", hash = "sha256:aa0cb481c4041bf52ffa7b0d8fa6cd3e88a2ca4879c533c9153882ee2556790d"},
