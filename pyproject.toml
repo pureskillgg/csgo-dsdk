@@ -14,7 +14,7 @@ name = "pureskillgg"
 url = "https://pureskillgg.jfrog.io/artifactory/api/pypi/private/simple"
 
 [tool.poetry.dependencies]
-python = "~3.8.11"
+python = "^3.8.11"
 
 [tool.poetry.dev-dependencies]
 black = "^21.4b1"
