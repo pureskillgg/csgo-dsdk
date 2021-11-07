@@ -4,9 +4,6 @@ build:
 	@rm -rf dist
 	@poetry build
 
-clean:
-	@rm -rf .pytest-incremental
-
 format:
 	@poetry run black .
 
@@ -18,7 +15,7 @@ publish:
 	@poetry run twine upload --skip-existing --repository-url https://pureskillgg.jfrog.io/artifactory/api/pypi/private dist/*
 
 test:
-	@poetry run pytest --inc --cov=./pureskillgg_makenew_pypackage
+	@poetry run pytest --cov=./pureskillgg_makenew_pypackage
 
 watch:
 	@poetry run ptw
