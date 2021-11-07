@@ -24,7 +24,7 @@ def load_data(job_id):
 def test_match_with_overtime():
     data = load_data("Y0C7ADW4AZEHSMxKlrFs")
     original_length = data["round_state"].shape[0]
-    data_overtime = dict()
+    data_overtime = {}
     data_overtime["round_state"] = pop_overtime(data["round_state"])
     assert isinstance(data["round_state"], pd.DataFrame)
     assert isinstance(data_overtime["round_state"], pd.DataFrame)
@@ -40,7 +40,7 @@ def test_match_with_overtime():
 def test_unsupported_channel_structure_error_usage():
     with pytest.raises(UnsupportedChannelStructure) as e_info:
         data = load_data("Y0C7ADW4AZEHSMxKlrFs")
-        data_overtime = dict()
+        data_overtime = {}
         data_overtime["header"] = pop_overtime(data["header"])
 
     assert str(e_info.value) == "Cannot pop overtime: missing columns round"
@@ -49,7 +49,7 @@ def test_unsupported_channel_structure_error_usage():
 def test_missing_columns_error_usage():
     with pytest.raises(MissingColumns) as e_info:
         data = load_data("Y0C7ADW4AZEHSMxKlrFs")
-        data_overtime = dict()
+        data_overtime = {}
         data_overtime["header"] = pop_overtime(data["header"])
 
     assert e_info.value.columns == ["round"]
@@ -60,7 +60,7 @@ def test_short_match():
     data = load_data("xgcHI9wjH5aKCf5hF578")
     original_length = data["round_state"].shape[0]
 
-    data_overtime = dict()
+    data_overtime = {}
     data_overtime["round_state"] = pop_overtime(data["round_state"])
     assert isinstance(data["round_state"], pd.DataFrame)
     assert isinstance(data["round_state"], pd.DataFrame)
@@ -71,7 +71,7 @@ def test_short_match():
 def test_regular_match():
     data = load_data("Z2ZVbsBleCmXZVZ9bFuL")
 
-    data_overtime = dict()
+    data_overtime = {}
     data_overtime["round_state"] = pop_overtime(data["round_state"])
     assert isinstance(data["round_state"], pd.DataFrame)
     assert isinstance(data_overtime["round_state"], pd.DataFrame)
