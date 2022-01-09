@@ -22,9 +22,9 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8.6
+          python-version: 3.8.11
       - name: Setup Poetry
-        uses: gr1n/setup-poetry@v4
+        uses: gr1n/setup-poetry@v7
       - name: Setup cache
         uses: actions/cache@v2
         with:
@@ -46,9 +46,9 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8.6
+          python-version: 3.8.11
       - name: Setup Poetry
-        uses: gr1n/setup-poetry@v4
+        uses: gr1n/setup-poetry@v7
       - name: Setup cache
         uses: actions/cache@v2
         with:
@@ -70,9 +70,9 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8.6
+          python-version: 3.8.11
       - name: Setup Poetry
-        uses: gr1n/setup-poetry@v4
+        uses: gr1n/setup-poetry@v7
       - name: Setup cache
         uses: actions/cache@v2
         with:

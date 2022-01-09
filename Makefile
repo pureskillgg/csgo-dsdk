@@ -4,9 +4,6 @@ build:
 	@rm -rf dist
 	@poetry build
 
-clean:
-	@rm -rf .pytest-incremental
-
 format:
 	@poetry run black .
 
