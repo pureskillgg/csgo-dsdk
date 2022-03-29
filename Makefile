@@ -12,7 +12,7 @@ lint:
 	@poetry run black --check .
 
 publish:
-	@poetry run twine upload --skip-existing --repository-url https://pureskillgg.jfrog.io/artifactory/api/pypi/private dist/*
+	@poetry run twine upload --skip-existing dist/*
 
 test:
 	@poetry run pytest --cov=./pureskillgg_csgo_dsdk

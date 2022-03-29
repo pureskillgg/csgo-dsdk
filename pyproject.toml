@@ -9,10 +9,6 @@ homepage = "https://github.com/pureskillgg/csgo-dsdk"
 repository = "https://github.com/pureskillgg/csgo-dsdk"
 include = ['poetry.lock']
 
-[[tool.poetry.source]]
-name = "pureskillgg"
-url = "https://pureskillgg.jfrog.io/artifactory/api/pypi/private/simple"
-
 [tool.poetry.dependencies]
 python = "^3.8.11"
 pandas = "^1.3.2"

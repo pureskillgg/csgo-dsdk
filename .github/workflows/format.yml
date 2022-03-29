@@ -43,9 +43,6 @@ jobs:
           restore-keys: ${{ runner.os }}-poetry-
       - name: Install dependencies
         run: poetry install
-        env:
-          POETRY_HTTP_BASIC_PURESKILLGG_USERNAME: ${{ secrets.JFROG_USER }}
-          POETRY_HTTP_BASIC_PURESKILLGG_PASSWORD: ${{ secrets.JFROG_API_KEY }}
       - name: Format
         run: make format
       - name: Commit
