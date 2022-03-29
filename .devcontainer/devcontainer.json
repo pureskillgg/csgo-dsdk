@@ -3,8 +3,8 @@
   "build": {
     "dockerfile": "Dockerfile",
     "args": {
-      "POETRY_VERSION": "1.1.11",
-      "VARIANT": "3.8"
+      "POETRY_VERSION": "1.1.13",
+      "VARIANT": "3.9"
     }
   },
   "remoteEnv": {
@@ -16,6 +16,9 @@
     "ms-python.python",
     "EditorConfig.EditorConfig"
   ],
-  "postCreateCommand": "poetry install",
+  "features": {
+    "git-lfs": "latest"
+  },
+  "postCreateCommand": "git lfs fetch && git lfs checkout && poetry install",
   "remoteUser": "vscode"
 }
