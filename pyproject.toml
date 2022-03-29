@@ -2,8 +2,8 @@
 name = "pureskillgg-csgo-dsdk"
 version = "0.3.0"
 description = "Python Data Science Development Kit for CS:GO."
-authors = ["PureSkill.gg <secure@pureskill.gg>"]
-license = "SEE LICENSE IN LICENSE.txt"
+authors = ["PureSkill.gg <contact@pureskill.gg>"]
+license = "MIT"
 readme = "README.rst"
 homepage = "https://github.com/pureskillgg/csgo-dsdk"
 repository = "https://github.com/pureskillgg/csgo-dsdk"
