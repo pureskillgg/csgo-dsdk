@@ -15,7 +15,7 @@ Python Data Science Development Kit for CS:GO.
 Description
 -----------
 
-TODO
+Do data science with CS:GO.
 
 Installation
 ------------
@@ -41,6 +41,8 @@ Quickstart
 ::
 
     $ git clone https://github.com/pureskillgg/csgo-dsdk.git
+    $ git lfs install
+    $ git lfs pull
     $ cd csgo-dsdk
     $ poetry install
 
@@ -61,6 +63,8 @@ Clone the project with
 ::
 
     $ git clone https://github.com/pureskillgg/csgo-dsdk.git
+    $ git lfs install
+    $ git lfs pull
 
 .. _source code: https://github.com/pureskillgg/csgo-dsdk
 
