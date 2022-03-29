@@ -39,23 +39,11 @@ jobs:
           git_committer_email: ${{ secrets.GIT_USER_EMAIL }}
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
-      - name: Setup Python
-        uses: actions/setup-python@v2
+      - name: Setup
+        uses: ./.github/actions/setup
         with:
-          python-version: 3.8.11
-      - name: Setup Poetry
-        uses: gr1n/setup-poetry@v7
-      - name: Setup cache
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/pypoetry/virtualenvs
-          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
-          restore-keys: ${{ runner.os }}-poetry-
-      - name: Install dependencies
-        run: poetry install
-        env:
-          POETRY_HTTP_BASIC_PURESKILLGG_USERNAME: ${{ secrets.JFROG_USER }}
-          POETRY_HTTP_BASIC_PURESKILLGG_PASSWORD: ${{ secrets.JFROG_API_KEY }}
+          pureskillgg_username: ${{ secrets.JFROG_USER }}
+          pureskillgg_password: ${{ secrets.JFROG_API_KEY }}
       - name: Lint
         run: make lint
       - name: Test
