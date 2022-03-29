@@ -1,6 +1,6 @@
 [MASTER]
 
-init-hook='import sys; sys.path.insert(0, os.path.abspath("pureskillgg_csgo_dsdk"))'
+init-hook='import sys; import os; sys.path.insert(0, os.path.abspath("pureskillgg_csgo_dsdk"))'
 
 [BASIC]
 good-names=df
