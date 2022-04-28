@@ -2,9 +2,11 @@
 Scrub PII from your data
 """
 # pylint: disable=invalid-name
+# pylint: disable=c-extension-no-member
 
 from typing import Dict, Union
 from numbers import Number
+import rapidjson
 
 REDACTED = "redacted"
 
@@ -105,7 +107,17 @@ def fix_commends_and_wins(data, manifest):
     data["player_info"] = pi
 
 
-def scrub_pii(data: Dict, manifest: Dict):
+def replace_job_id(manifest):
+    """Replace job id in manifest with id"""
+    job_id = manifest["jobId"]
+    anon_id = manifest["id"]
+    manifest_str = rapidjson.dumps(manifest)
+    manifest_str = manifest_str.replace(job_id, anon_id)
+    manifest = rapidjson.loads(manifest_str)
+    return manifest
+
+
+def scrub_csds_pii(data: Dict, manifest: Dict):
     """Remove events in overtime rounds
 
     Inputs:
@@ -129,3 +141,6 @@ def scrub_pii(data: Dict, manifest: Dict):
     fix_commends_and_wins(data, manifest)
 
     replace_if_exists(data, manifest, "player_status", "ping", replacement=0)
+
+    manifest = replace_job_id(manifest)
+    return manifest

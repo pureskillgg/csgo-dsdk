@@ -6,7 +6,7 @@ import os
 import pytest
 from pureskillgg_dsdk import GameDsLoader, DsReaderFs
 
-from .scrub_pii import scrub_pii
+from .scrub_pii import scrub_csds_pii
 
 
 def test_remove_pii():
@@ -29,7 +29,7 @@ def test_remove_pii():
     data["player_info"]["commends_teacher"] = 12345
     manifest = copy.deepcopy(csds_loader.manifest)
 
-    scrub_pii(data, manifest)
+    manifest = scrub_csds_pii(data, manifest)
     assert data["header"]["sharecode"].iat[0] == redacted
     assert data["header"]["demo_id"].iat[0] == redacted
     assert data["player_personal"]["clan_tag"].iat[0] == redacted
@@ -39,3 +39,4 @@ def test_remove_pii():
         assert len(steam_id) == 1
     assert data["player_status"]["ping"].iat[100] == 0
     assert data["player_info"]["commends_teacher"].iat[0] == 101
+    assert manifest["jobId"] == manifest["id"]
