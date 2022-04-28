@@ -18,14 +18,36 @@ def data_exists(data, channel, column):
 
 
 def replace_if_exists(
-    data, channel, column, /, replacement: Union[str, bool, Number] = REDACTED
+    data, manifest, channel, column, /, replacement: Union[str, bool, Number] = REDACTED
 ):
     """Replace a column with a certain value if it exists"""
     if data_exists(data, channel, column):
         data[channel][column] = replacement
+        channel_index, column_index = get_manifest_indexes(manifest, channel, column)
+        manifest["channels"][channel_index]["columns"][column_index][
+            "origin"
+        ] += "-redacted"
 
 
-def fix_steam_ids(data):
+def get_manifest_indexes(manifest, channel, column):
+    """Get the indices for channel and column in the manifest"""
+    channel_index = -1
+    for x in range(len(manifest["channels"])):
+        if manifest["channels"][x]["channel"] == channel:
+            channel_index = x
+            break
+    if channel_index == -1:
+        raise Exception(f"Channel does not exist: {channel}")
+    column_index = -1
+    for x in range(len(manifest["channels"][channel_index]["columns"])):
+        if manifest["channels"][channel_index]["columns"][x]["name"] == column:
+            column_index = x
+    if column_index == -1:
+        raise Exception(f"Column does not exist in channel {channel}: {column}")
+    return channel_index, column_index
+
+
+def fix_steam_ids(data, manifest):
     """Replace steam ids with A, B, C..."""
     if "player_personal" not in data:
         return
@@ -38,10 +60,28 @@ def fix_steam_ids(data):
         unique_ids[steam_id] = alphabet[i]
     pp["steam_id"] = pp["steam_id"].apply(lambda x: unique_ids[x])
     data["player_personal"] = pp
+    channel_index, column_index = get_manifest_indexes(
+        manifest, "player_personal", "steam_id"
+    )
+    manifest["channels"][channel_index]["columns"][column_index][
+        "origin"
+    ] += "-redacted"
 
 
-def fix_commends_and_wins(data):
+def fix_commends_and_wins(data, manifest):
     """Clear out too many commends and wins"""
+
+    def cap_manifest_to_value(column, value=101):
+        channel_index, column_index = get_manifest_indexes(
+            manifest, "player_info", column
+        )
+        manifest["channels"][channel_index]["columns"][column_index][
+            "origin"
+        ] += "-capped"
+        manifest["channels"][channel_index]["columns"][column_index][
+            "comment"
+        ] += f" Capped to {value}."
+
     if "player_info" not in data:
         return
     pi = data["player_info"]
@@ -49,19 +89,23 @@ def fix_commends_and_wins(data):
     if "wins" in columns:
         index = pi["wins"] > 2500
         pi.loc[index, "wins"] = 2501
+        cap_manifest_to_value("wins", value=2501)
     if "commends_friendly" in columns:
         index = pi["commends_friendly"] > 100
         pi.loc[index, "commends_friendly"] = 101
+        cap_manifest_to_value("commends_friendly")
     if "commends_leader" in columns:
         index = pi["commends_leader"] > 100
         pi.loc[index, "commends_leader"] = 101
+        cap_manifest_to_value("commends_leader")
     if "commends_teacher" in columns:
         index = pi["commends_teacher"] > 100
         pi.loc[index, "commends_teacher"] = 101
+        cap_manifest_to_value("commends_teacher")
     data["player_info"] = pi
 
 
-def scrub_pii(data: Dict):
+def scrub_pii(data: Dict, manifest: Dict):
     """Remove events in overtime rounds
 
     Inputs:
@@ -71,17 +115,17 @@ def scrub_pii(data: Dict):
         Nothing. Data is changed in place.
     """
 
-    replace_if_exists(data, "header", "sharecode")
-    replace_if_exists(data, "header", "demo_id")
+    replace_if_exists(data, manifest, "header", "sharecode")
+    replace_if_exists(data, manifest, "header", "demo_id")
 
-    replace_if_exists(data, "player_name", "name_new")
-    replace_if_exists(data, "player_name", "name_old")
+    replace_if_exists(data, manifest, "player_name", "name_new")
+    replace_if_exists(data, manifest, "player_name", "name_old")
 
-    replace_if_exists(data, "player_personal", "name")
-    replace_if_exists(data, "player_personal", "clan_tag")
+    replace_if_exists(data, manifest, "player_personal", "name")
+    replace_if_exists(data, manifest, "player_personal", "clan_tag")
 
-    fix_steam_ids(data)
+    fix_steam_ids(data, manifest)
 
-    fix_commends_and_wins(data)
+    fix_commends_and_wins(data, manifest)
 
-    replace_if_exists(data, "player_status", "ping", replacement=0)
+    replace_if_exists(data, manifest, "player_status", "ping", replacement=0)
