@@ -29,6 +29,8 @@ def scrub_csds_pii(manifest: Dict, data: Dict):
     Returns:
         Nothing. Data is changed in place.
     """
+    for i in range(len(manifest["channels"])):
+        manifest["channels"][i]["redacted"] = False
 
     replace_if_exists(data, manifest, "header", "sharecode")
     replace_if_exists(data, manifest, "header", "demo_id")
@@ -67,6 +69,7 @@ def replace_if_exists(
         manifest["channels"][channel_index]["columns"][column_index][
             "origin"
         ] += "-redacted"
+        manifest["channels"][channel_index]["redacted"] = True
 
 
 def get_manifest_indexes(manifest, channel, column):
@@ -106,6 +109,7 @@ def fix_steam_ids(data, manifest):
     manifest["channels"][channel_index]["columns"][column_index][
         "origin"
     ] += "-redacted"
+    manifest["channels"][channel_index]["redacted"] = True
 
 
 def fix_commends_and_wins(data, manifest):
@@ -121,6 +125,7 @@ def fix_commends_and_wins(data, manifest):
         manifest["channels"][channel_index]["columns"][column_index][
             "comment"
         ] += f" Capped to {value}."
+        manifest["channels"][channel_index]["redacted"] = True
 
     if "player_info" not in data:
         return
@@ -152,4 +157,5 @@ def replace_job_id(manifest):
     manifest_str = rapidjson.dumps(manifest)
     manifest_str = manifest_str.replace(job_id, anon_id)
     manifest = rapidjson.loads(manifest_str)
+    manifest["redacted"] = True
     return manifest

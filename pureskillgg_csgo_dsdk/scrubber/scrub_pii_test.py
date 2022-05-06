@@ -32,3 +32,11 @@ def test_remove_pii():
     assert data["player_status"]["ping"].iat[100] == 0
     assert data["player_info"]["commends_teacher"].iat[0] == 101
     assert manifest["jobId"] == manifest["id"]
+
+    scrubbed_channels = [k["channel"] for k in SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS]
+    for channel in manifest["channels"]:
+        if channel["channel"] in scrubbed_channels:
+            assert channel["redacted"] is True
+        else:
+            assert channel["redacted"] is False
+    assert manifest["redacted"] is True
