@@ -27,7 +27,8 @@ def scrub_csds_pii(manifest: Dict, data: Dict):
         data (dict): CSDS data dictionary.
 
     Returns:
-        Nothing. Data is changed in place.
+        manifest (dict): CSDS manifest.
+        The data is changed in place and not returned.
     """
     manifest = replace_job_id(manifest)
 
