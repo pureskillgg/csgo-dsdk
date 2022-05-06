@@ -29,6 +29,8 @@ def scrub_csds_pii(manifest: Dict, data: Dict):
     Returns:
         Nothing. Data is changed in place.
     """
+    manifest = replace_job_id(manifest)
+
     for i in range(len(manifest["channels"])):
         manifest["channels"][i]["redacted"] = False
 
@@ -47,7 +49,6 @@ def scrub_csds_pii(manifest: Dict, data: Dict):
 
     replace_if_exists(data, manifest, "player_status", "ping", replacement=0)
 
-    manifest = replace_job_id(manifest)
     return manifest
 
 
