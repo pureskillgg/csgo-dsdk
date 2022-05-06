@@ -8,7 +8,7 @@ from typing import Dict, Union
 from numbers import Number
 import rapidjson
 
-from pureskillgg_csgo_dsdk import normalize_instructions
+from pureskillgg_dsdk import normalize_instructions
 
 REDACTED = "redacted"
 
