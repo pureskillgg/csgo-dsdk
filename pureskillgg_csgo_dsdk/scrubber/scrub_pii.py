@@ -10,6 +10,9 @@ import rapidjson
 
 REDACTED = "redacted"
 
+SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS = []
+
+
 def scrub_csds_pii(data: Dict, manifest: Dict):
     """Remove events in overtime rounds
 
