@@ -10,13 +10,20 @@ import rapidjson
 
 REDACTED = "redacted"
 
-SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS = []
+SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS = [
+    {"channel": "player_name"},
+    {"channel": "header"},
+    {"channel": "player_personal"},
+    {"channel": "player_info"},
+    {"channel": "player_status"},
+]
 
 
-def scrub_csds_pii(data: Dict, manifest: Dict):
+def scrub_csds_pii(manifest: Dict, data: Dict):
     """Remove events in overtime rounds
 
     Inputs:
+        manifest (dict): CSDS manifest.
         data (dict): CSDS data dictionary.
 
     Returns:

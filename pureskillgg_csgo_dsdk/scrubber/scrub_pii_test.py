@@ -6,7 +6,7 @@ import os
 import pytest
 from pureskillgg_dsdk import GameDsLoader, DsReaderFs
 
-from .scrub_pii import scrub_csds_pii
+from .scrub_pii import scrub_csds_pii, SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS
 
 
 def test_remove_pii():
@@ -17,19 +17,11 @@ def test_remove_pii():
         log=None,
     )
     csds_loader = GameDsLoader(reader=csds_reader, log=None)
-    data = csds_loader.get_channels(
-        [
-            {"channel": "player_name"},
-            {"channel": "header"},
-            {"channel": "player_personal"},
-            {"channel": "player_info"},
-            {"channel": "player_status", "columns": ["ping"]},
-        ]
-    )
+    data = csds_loader.get_channels(SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS)
     data["player_info"]["commends_teacher"] = 12345
     manifest = copy.deepcopy(csds_loader.manifest)
 
-    manifest = scrub_csds_pii(data, manifest)
+    manifest = scrub_csds_pii(manifest, data)
     assert data["header"]["sharecode"].iat[0] == redacted
     assert data["header"]["demo_id"].iat[0] == redacted
     assert data["player_personal"]["clan_tag"].iat[0] == redacted
