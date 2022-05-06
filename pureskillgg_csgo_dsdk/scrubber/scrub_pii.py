@@ -10,6 +10,34 @@ import rapidjson
 
 REDACTED = "redacted"
 
+def scrub_csds_pii(data: Dict, manifest: Dict):
+    """Remove events in overtime rounds
+
+    Inputs:
+        data (dict): CSDS data dictionary.
+
+    Returns:
+        Nothing. Data is changed in place.
+    """
+
+    replace_if_exists(data, manifest, "header", "sharecode")
+    replace_if_exists(data, manifest, "header", "demo_id")
+
+    replace_if_exists(data, manifest, "player_name", "name_new")
+    replace_if_exists(data, manifest, "player_name", "name_old")
+
+    replace_if_exists(data, manifest, "player_personal", "name")
+    replace_if_exists(data, manifest, "player_personal", "clan_tag")
+
+    fix_steam_ids(data, manifest)
+
+    fix_commends_and_wins(data, manifest)
+
+    replace_if_exists(data, manifest, "player_status", "ping", replacement=0)
+
+    manifest = replace_job_id(manifest)
+    return manifest
+
 
 def data_exists(data, channel, column):
     """Check for a channel/column existing"""
@@ -114,33 +142,4 @@ def replace_job_id(manifest):
     manifest_str = rapidjson.dumps(manifest)
     manifest_str = manifest_str.replace(job_id, anon_id)
     manifest = rapidjson.loads(manifest_str)
-    return manifest
-
-
-def scrub_csds_pii(data: Dict, manifest: Dict):
-    """Remove events in overtime rounds
-
-    Inputs:
-        data (dict): CSDS data dictionary.
-
-    Returns:
-        Nothing. Data is changed in place.
-    """
-
-    replace_if_exists(data, manifest, "header", "sharecode")
-    replace_if_exists(data, manifest, "header", "demo_id")
-
-    replace_if_exists(data, manifest, "player_name", "name_new")
-    replace_if_exists(data, manifest, "player_name", "name_old")
-
-    replace_if_exists(data, manifest, "player_personal", "name")
-    replace_if_exists(data, manifest, "player_personal", "clan_tag")
-
-    fix_steam_ids(data, manifest)
-
-    fix_commends_and_wins(data, manifest)
-
-    replace_if_exists(data, manifest, "player_status", "ping", replacement=0)
-
-    manifest = replace_job_id(manifest)
     return manifest
