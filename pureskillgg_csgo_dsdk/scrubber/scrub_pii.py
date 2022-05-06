@@ -8,19 +8,15 @@ from typing import Dict, Union
 from numbers import Number
 import rapidjson
 
-from pureskillgg_dsdk import normalize_instructions
-
 REDACTED = "redacted"
 
-SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS = normalize_instructions(
-    [
-        {"channel": "player_name"},
-        {"channel": "header"},
-        {"channel": "player_personal"},
-        {"channel": "player_info"},
-        {"channel": "player_status"},
-    ]
-)
+SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS = [
+    {"channel": "player_name"},
+    {"channel": "header"},
+    {"channel": "player_personal"},
+    {"channel": "player_info"},
+    {"channel": "player_status"},
+]
 
 
 def scrub_csds_pii(manifest: Dict, data: Dict):
