@@ -32,10 +32,10 @@ def scrub_csds_pii(manifest: Dict, data: Dict):
         The data is changed in place and not returned.
     """
     manifest = replace_job_id(manifest)
-    manifest['sharecode'] = REDACTED
-    manifest['demoId'] = REDACTED
-    manifest['metadata']['bucket'] = REDACTED
-    manifest['matchDate'] = fix_date_precision(manifest['matchDate'])
+    manifest["sharecode"] = REDACTED
+    manifest["demoId"] = REDACTED
+    manifest["metadata"]["bucket"] = REDACTED
+    manifest["matchDate"] = fix_date_precision(manifest["matchDate"])
 
     for i in range(len(manifest["channels"])):
         manifest["channels"][i]["redacted"] = False
@@ -167,6 +167,7 @@ def replace_job_id(manifest):
     manifest["redacted"] = True
     return manifest
 
-def fix_date_precision(date, timespec='minutes'):
-    dt=dateutil.parser.isoparse(date)
+
+def fix_date_precision(date, timespec="minutes"):
+    dt = dateutil.parser.isoparse(date)
     return dt.isoformat(timespec=timespec)
