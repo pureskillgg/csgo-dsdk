@@ -4,9 +4,9 @@ Scrub PII from your data
 # pylint: disable=invalid-name
 # pylint: disable=c-extension-no-member
 
-import dateutil.parser
 from typing import Dict, Union
 from numbers import Number
+import dateutil.parser
 import rapidjson
 
 REDACTED = "redacted"
@@ -169,5 +169,6 @@ def replace_job_id(manifest):
 
 
 def fix_date_precision(date, timespec="minutes"):
+    """Set date to time precision"""
     dt = dateutil.parser.isoparse(date)
     return dt.isoformat(timespec=timespec)
