@@ -4,6 +4,7 @@
 import copy
 import os
 import pytest
+import dateutil.parser
 from pureskillgg_dsdk import GameDsLoader, DsReaderFs
 
 from .scrub_pii import scrub_csds_pii, SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS
@@ -32,6 +33,11 @@ def test_remove_pii():
     assert data["player_status"]["ping"].iat[100] == 0
     assert data["player_info"]["commends_teacher"].iat[0] == 101
     assert manifest["jobId"] == manifest["id"]
+    assert manifest["sharecode"] == redacted
+    assert manifest["demoId"] == redacted
+    assert manifest["metadata"]["bucket"] == redacted
+    date = dateutil.parser.isoparse(manifest["matchDate"])
+    assert date.second == 0
 
     scrubbed_channels = [k["channel"] for k in SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS]
     for channel in manifest["channels"]:
