@@ -14,7 +14,9 @@ def test_remove_pii():
     redacted = "redacted"
     csds_reader = DsReaderFs(
         root_path=os.path.join("fixtures"),
-        manifest_key=os.path.join("Y0C7ADW4AZEHSMxKlrFs", "csds"),
+        manifest_key=os.path.join(
+            "csds", "2022", "05", "15", "9c9c6333-0eff-445f-9f18-6cb5138f944c", "csds"
+        ),
         log=None,
     )
     csds_loader = GameDsLoader(reader=csds_reader, log=None)
