@@ -6,6 +6,7 @@ Scrub PII from your data
 
 from typing import Dict, Union
 from numbers import Number
+import dateutil.parser
 import rapidjson
 
 REDACTED = "redacted"
@@ -31,6 +32,10 @@ def scrub_csds_pii(manifest: Dict, data: Dict):
         The data is changed in place and not returned.
     """
     manifest = replace_job_id(manifest)
+    manifest["sharecode"] = REDACTED
+    manifest["demoId"] = REDACTED
+    manifest["metadata"]["bucket"] = REDACTED
+    manifest["matchDate"] = fix_date_precision(manifest["matchDate"])
 
     for i in range(len(manifest["channels"])):
         manifest["channels"][i]["redacted"] = False
@@ -161,3 +166,9 @@ def replace_job_id(manifest):
     manifest = rapidjson.loads(manifest_str)
     manifest["redacted"] = True
     return manifest
+
+
+def fix_date_precision(date, timespec="minutes"):
+    """Set date to time precision"""
+    dt = dateutil.parser.isoparse(date)
+    return dt.isoformat(timespec=timespec)
