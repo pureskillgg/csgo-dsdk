@@ -11,10 +11,10 @@ from .pop_overtime import pop_overtime
 from ..errors import MissingColumns, UnsupportedChannelStructure
 
 
-def load_data(job_id):
+def load_data(match_id):
     csds_reader = DsReaderFs(
         root_path=os.path.join("fixtures"),
-        manifest_key=os.path.join(job_id, "csds"),
+        manifest_key=os.path.join("csds", "2022", "05", "15", match_id, "csds"),
         log=None,
     )
     csds_loader = GameDsLoader(reader=csds_reader, log=None)
@@ -22,7 +22,7 @@ def load_data(job_id):
 
 
 def test_match_with_overtime():
-    data = load_data("Y0C7ADW4AZEHSMxKlrFs")
+    data = load_data("80e8dd2f-b876-4136-bfe5-6985bf2db179")
     original_length = data["round_state"].shape[0]
     data_overtime = {}
     data_overtime["round_state"] = pop_overtime(data["round_state"])
@@ -39,7 +39,7 @@ def test_match_with_overtime():
 
 def test_unsupported_channel_structure_error_usage():
     with pytest.raises(UnsupportedChannelStructure) as e_info:
-        data = load_data("Y0C7ADW4AZEHSMxKlrFs")
+        data = load_data("994a9fed-d4a5-4096-8088-93b422be5025")
         data_overtime = {}
         data_overtime["header"] = pop_overtime(data["header"])
 
@@ -48,7 +48,7 @@ def test_unsupported_channel_structure_error_usage():
 
 def test_missing_columns_error_usage():
     with pytest.raises(MissingColumns) as e_info:
-        data = load_data("Y0C7ADW4AZEHSMxKlrFs")
+        data = load_data("994a9fed-d4a5-4096-8088-93b422be5025")
         data_overtime = {}
         data_overtime["header"] = pop_overtime(data["header"])
 
@@ -57,7 +57,7 @@ def test_missing_columns_error_usage():
 
 
 def test_short_match():
-    data = load_data("xgcHI9wjH5aKCf5hF578")
+    data = load_data("9c9c6333-0eff-445f-9f18-6cb5138f944c")
     original_length = data["round_state"].shape[0]
 
     data_overtime = {}
@@ -69,7 +69,7 @@ def test_short_match():
 
 
 def test_regular_match():
-    data = load_data("Z2ZVbsBleCmXZVZ9bFuL")
+    data = load_data("994a9fed-d4a5-4096-8088-93b422be5025")
 
     data_overtime = {}
     data_overtime["round_state"] = pop_overtime(data["round_state"])
