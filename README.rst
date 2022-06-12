@@ -132,7 +132,7 @@ Install it with
 
 ::
 
-    $ poetry add pureskillgg_makenew_pypackage
+    $ poetry add pureskillgg-makenew-pypackage
 
 .. _JFrog Artifactory: https://pureskillgg.jfrog.io/
 
