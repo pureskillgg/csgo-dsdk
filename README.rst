@@ -21,15 +21,15 @@ Installation
 ------------
 
 This package is registered on the `Python Package Index (PyPI)`_
-as pureskillgg_csgo_dsdk_.
+as pureskillgg-csgo-dsdk_.
 
 Install it with
 
 ::
 
-    $ poetry add pureskillgg_csgo_dsdk
+    $ poetry add pureskillgg-csgo-dsdk
 
-.. _pureskillgg_csgo_dsdk: https://pypi.python.org/pypi/pureskillgg-csgo-dsdk
+.. _pureskillgg-csgo-dsdk: https://pypi.python.org/pypi/pureskillgg-csgo-dsdk
 .. _Python Package Index (PyPI): https://pypi.python.org/
 
 Development and Testing
