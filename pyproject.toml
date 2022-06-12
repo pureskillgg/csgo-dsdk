@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pureskillgg-csgo-dsdk"
-version = "1.0.0b0"
+version = "1.0.0b1"
 description = "Python Data Science Development Kit for CS:GO."
 authors = ["PureSkill.gg <contact@pureskill.gg>"]
 license = "MIT"
