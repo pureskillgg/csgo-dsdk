@@ -424,7 +424,7 @@ testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
 name = "pureskillgg-dsdk"
-version = "0.31.1"
+version = "1.0.2b1"
 description = "Python Data Science Development Kit."
 category = "main"
 optional = false
@@ -819,7 +819,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "f7de28c1b8c42169ee4b158fb32e3cfb28fad3c512e876365b014f19fbd332fd"
+content-hash = "25f7d1f06618010c9ea9a1bfdd1f5078d7d6cf07754f7e1f55f43bf53bdddd83"
 
 [metadata.files]
 astroid = [
@@ -1168,8 +1168,8 @@ pluggy = [
     {file = "pluggy-1.0.0.tar.gz", hash = "sha256:4224373bacce55f955a878bf9cfa763c1e360858e330072059e10bad68531159"},
 ]
 pureskillgg-dsdk = [
-    {file = "pureskillgg-dsdk-0.31.1.tar.gz", hash = "sha256:cfebefd4e1c21fbf0dfda9ffcdff4f4261f7872cea00214491c50b4843064dd6"},
-    {file = "pureskillgg_dsdk-0.31.1-py3-none-any.whl", hash = "sha256:7ef2880db2b91bc1909058f3d26751483ed3652fe059c79d02450584c4543a70"},
+    {file = "pureskillgg-dsdk-1.0.2b1.tar.gz", hash = "sha256:9f59e3a525fccda02d6d965e724a686841b48ff867cb550d26845ce45e57e89c"},
+    {file = "pureskillgg_dsdk-1.0.2b1-py3-none-any.whl", hash = "sha256:e0897ebfa0c82b8d46b41781d8970878f1b058a58760c502978a6301b327745e"},
 ]
 py = [
     {file = "py-1.11.0-py2.py3-none-any.whl", hash = "sha256:607c53218732647dff4acdfcd50cb62615cedf612e72d1724fb1a0cc6405b378"},
