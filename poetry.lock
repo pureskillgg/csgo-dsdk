@@ -809,7 +809,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "940cf1ba27d4b5158ab437bb08d7d296e4181837d80314e718ab2f2f20436543"
+content-hash = "f7de28c1b8c42169ee4b158fb32e3cfb28fad3c512e876365b014f19fbd332fd"
 
 [metadata.files]
 astroid = [
