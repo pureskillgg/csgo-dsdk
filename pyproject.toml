@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pureskillgg-makenew-pypackage"
-version = "1.17.0"
+version = "1.18.0"
 description = "Package skeleton for a Python module."
 authors = ["PureSkill.gg <secure@pureskill.gg>"]
 license = "SEE LICENSE IN LICENSE.txt"
