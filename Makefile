@@ -1,4 +1,4 @@
-all: lint test
+all: build
 
 build:
 	@rm -rf dist
@@ -11,13 +11,16 @@ lint:
 	@poetry run pylint ./pureskillgg_csgo_dsdk
 	@poetry run black --check .
 
-publish:
-	@poetry run twine upload --skip-existing dist/*
-
 test:
 	@poetry run pytest --cov=./pureskillgg_csgo_dsdk
 
 watch:
 	@poetry run ptw
 
-.PHONY: build docs test
+version:
+	@git add pyproject.toml
+	@git commit -m "$$(poetry version -s)"
+	@git tag --sign "v$$(poetry version -s)" -m "$(poetry version -s)"
+	@git push --follow-tags
+
+.PHONY: build format lint test watch version
