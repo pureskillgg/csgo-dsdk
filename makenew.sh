@@ -55,7 +55,7 @@ makenew () {
   read -p '> Module name (my_package): ' mk_mod
   read -p '> Package description: ' mk_description
 
-  sed_delete README.rst '15,124d'
+  sed_delete README.rst '15,123d'
   sed_insert README.rst '15i' 'TODO'
 
   mk_user="pureskillgg"
