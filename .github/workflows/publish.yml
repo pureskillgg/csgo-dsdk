@@ -19,7 +19,10 @@ jobs:
           pureskillgg_username: ${{ secrets.JFROG_USER }}
           pureskillgg_password: ${{ secrets.JFROG_API_KEY }}
       - name: Publish
-        run: poetry publish --build --skip-existing -u $USERNAME -p $PASSWORD -r pureskillgg
+        run: |
+          poetry config repositories.jfrog $REPOSITORY
+          poetry publish --build --skip-existing -u $USERNAME -p $PASSWORD -r jfrog
         env:
           USERNAME: ${{ secrets.JFROG_USER }}
           PASSWORD: ${{ secrets.JFROG_API_KEY }}
+          REPOSITORY: https://pureskillgg.jfrog.io/artifactory/api/pypi/private

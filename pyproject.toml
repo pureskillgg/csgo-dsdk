@@ -10,7 +10,7 @@ repository = "https://github.com/pureskillgg/makenew-pypackage"
 
 [[tool.poetry.source]]
 name = "pureskillgg"
-url = "https://pureskillgg.jfrog.io/artifactory/api/pypi/private"
+url = "https://pureskillgg.jfrog.io/artifactory/api/pypi/private/simple"
 
 [tool.poetry.dependencies]
 python = "^3.9"
