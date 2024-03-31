@@ -256,14 +256,14 @@ testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
 name = "pureskillgg-dsdk"
-version = "1.3.0"
+version = "1.3.1"
 description = "Python Data Science Development Kit."
 category = "main"
 optional = false
 python-versions = "<4.0,>=3.9"
 
 [package.dependencies]
-boto3 = ">=1.34,<2.0"
+boto3 = ">=1.12.32,<2.0.0"
 pandas = "1.5.3"
 pyarrow = ">=14.0.0,<14.1.0"
 python-rapidjson = ">=1.6,<2.0"
@@ -502,7 +502,7 @@ python-versions = ">=3.6"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "076d9c54929654b052c783f9908621a6cfbe875e888bd45bbb285b9171ff24c3"
+content-hash = "fb5fac7dfc5394839952770692cafa8cd10c75397496a1a04f0a8025c3291f07"
 
 [metadata.files]
 astroid = [
@@ -747,8 +747,8 @@ pluggy = [
     {file = "pluggy-1.4.0.tar.gz", hash = "sha256:8c85c2876142a764e5b7548e7d9a0e0ddb46f5185161049a79b7e974454223be"},
 ]
 pureskillgg-dsdk = [
-    {file = "pureskillgg-dsdk-1.3.0.tar.gz", hash = "sha256:bdae1e1a6aa495a74af129cdb6c70d85c225ccbf8416f9c2854c7bc5e9eef779"},
-    {file = "pureskillgg_dsdk-1.3.0-py3-none-any.whl", hash = "sha256:328d60dc0432d17885d0805f81549d341a84c84e85d762008456412c9645c24b"},
+    {file = "pureskillgg-dsdk-1.3.1.tar.gz", hash = "sha256:f94429231ffc07b8e8167fc312a3ede9e85b673f300157516d9dc09220e1121c"},
+    {file = "pureskillgg_dsdk-1.3.1-py3-none-any.whl", hash = "sha256:c82d02324beeb4fd376edbc8e20ac79c1433ac20a6dcb2bf7c60755faaa553b7"},
 ]
 pyarrow = [
     {file = "pyarrow-14.0.2-cp310-cp310-macosx_10_14_x86_64.whl", hash = "sha256:ba9fe808596c5dbd08b3aeffe901e5f81095baaa28e7d5118e01354c64f22807"},
