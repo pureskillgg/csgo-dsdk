@@ -87,13 +87,13 @@ def get_manifest_indexes(manifest, channel, column):
             channel_index = x
             break
     if channel_index == -1:
-        raise Exception(f"Channel does not exist: {channel}")
+        raise RuntimeError(f"Channel does not exist: {channel}")
     column_index = -1
     for x in range(len(manifest["channels"][channel_index]["columns"])):
         if manifest["channels"][channel_index]["columns"][x]["name"] == column:
             column_index = x
     if column_index == -1:
-        raise Exception(f"Column does not exist in channel {channel}: {column}")
+        raise RuntimeError(f"Column does not exist in channel {channel}: {column}")
     return channel_index, column_index
 
 
