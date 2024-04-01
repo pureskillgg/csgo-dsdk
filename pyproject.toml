@@ -10,9 +10,9 @@ repository = "https://github.com/pureskillgg/csgo-dsdk"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-pandas = "1.5.3"
-pureskillgg-dsdk = "^1.3.1"
+pureskillgg-dsdk = "^2.0.0"
 structlog = "^22.1.0"
+pandas = { version = "^2.2.1", extras = ["performance", "plot", "output-formatting", "computation", "parquet", "fss", "aws"]}
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"
