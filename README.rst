@@ -27,7 +27,7 @@ Install it with
 
 ::
 
-    $ poetry add pureskillgg-csgo-dsdk
+    $ uv add pureskillgg-csgo-dsdk
 
 .. _pureskillgg-csgo-dsdk: https://pypi.python.org/pypi/pureskillgg-csgo-dsdk
 .. _Python Package Index (PyPI): https://pypi.python.org/
@@ -44,7 +44,7 @@ Quickstart
     $ git lfs install
     $ git lfs pull
     $ cd csgo-dsdk
-    $ poetry install
+    $ uv sync
 
 Run each command below in a separate terminal window:
 
@@ -71,15 +71,15 @@ Clone the project with
 Requirements
 ~~~~~~~~~~~~
 
-You will need `Python 3`_ and Poetry_.
+You will need `Python 3`_ and uv_.
 
 Install the development dependencies with
 
 ::
 
-    $ poetry install
+    $ uv sync
 
-.. _Poetry: https://poetry.eustace.io/
+.. _uv: https://docs.astral.sh/uv/
 .. _Python 3: https://www.python.org/
 
 Tests
@@ -107,14 +107,14 @@ Run tests on changes with
 Publishing
 ~~~~~~~~~~
 
-Use the `poetry version`_ command to release a new version.
+Use the `uv version`_ command to release a new version.
 Then run `make version` to commit and push a new git tag
 which will trigger a GitHub action.
 
 Publishing may be triggered using on the web
 using a `workflow_dispatch on GitHub Actions`_.
 
-.. _Poetry version: https://python-poetry.org/docs/cli/#version
+.. _uv version: https://docs.astral.sh/uv/reference/cli/#uv-version
 .. _workflow_dispatch on GitHub Actions: https://github.com/pureskillgg/csgo-dsdk/actions?query=workflow%3Aversion
 
 GitHub Actions
