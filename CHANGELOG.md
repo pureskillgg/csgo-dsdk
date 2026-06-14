@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## 3.0.0 / 2026-06-14
+
+- Migrate to Python 3.11+ (CI test matrix 3.11-3.14).
+- Update to pureskillgg-dsdk 3.0 and the new data stack: pandas 2.3, numpy 2, structlog 26.
+- Update dev tooling: black 26, pylint 4, pytest 9, pytest-cov 7; remove pytest-runner.
+
+## 2.0.2 / 2026-06-09
+
+- Normalize the package name automatically. (Tagged but not published to PyPI; superseded by 3.0.0.)
+
+## 2.0.1 / 2026-06-09
+
+- Update GitHub Actions to clear Node 20 deprecations. (Tagged but not published to PyPI; superseded by 3.0.0.)
+
+## 2.0.0 / 2024-04-01
+
+- Update dependencies (pureskillgg-dsdk 2, pandas 2).
+
+## 1.2.1 / 2024-03-31
+
+- Update the pureskillgg-dsdk dependency.
+
+## 1.2.0 / 2024-03-31
+
+- Update the pureskillgg-dsdk and pandas dependencies.
+
+## 1.1.0 / 2023-11-18
+
+- Update the pureskillgg-dsdk dependency.
+
 ## 1.0.0 / 2022-07-25
 
 - Initial release.

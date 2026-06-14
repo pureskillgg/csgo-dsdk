@@ -1,4 +1,5 @@
 """Exceptions for the csgo dsdk"""
+
 from typing import List
 
 
