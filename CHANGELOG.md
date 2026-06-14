@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## 3.0.1 / 2026-06-14
+
+### Fixed
+
+- Stage uv.lock in the version commit.
+
 ## 3.0.0 / 2026-06-14
 
 - Migrate to Python 3.11+ (CI test matrix 3.11-3.14).
