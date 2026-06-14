@@ -3,12 +3,10 @@
   "build": {
     "dockerfile": "Dockerfile",
     "args": {
-      "POETRY_VERSION": "1.2.1",
       "VARIANT": "3.9"
     }
   },
   "remoteEnv": {
-    "POETRY_VIRTUALENVS_IN_PROJECT": "true",
     "PATH": "${containerEnv:PATH}:/home/vscode/.local/bin"
   },
   "extensions": [
@@ -19,6 +17,6 @@
   "features": {
     "git-lfs": "latest"
   },
-  "postCreateCommand": "git lfs fetch && git lfs checkout && poetry install",
+  "postCreateCommand": "git lfs fetch && git lfs checkout && uv sync",
   "remoteUser": "vscode"
 }
