@@ -1648,7 +1648,6 @@ name = "pureskillgg-csgo-dsdk"
 version = "2.0.2"
 source = { editable = "." }
 dependencies = [
-    { name = "numpy" },
     { name = "pandas", extra = ["aws", "computation", "fss", "output-formatting", "parquet", "performance", "plot"] },
     { name = "pureskillgg-dsdk" },
     { name = "structlog" },
@@ -1665,7 +1664,6 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "numpy", specifier = ">=2.1.0,<3.0.0" },
     { name = "pandas", extras = ["performance", "plot", "output-formatting", "computation", "parquet", "fss", "aws"], specifier = ">=2.3.0,<3.0.0" },
     { name = "pureskillgg-dsdk", specifier = ">=3.0.0,<4.0.0" },
     { name = "structlog", specifier = ">=26.0.0,<27.0.0" },

@@ -9,7 +9,6 @@ requires-python = ">=3.11"
 dependencies = [
     "pureskillgg-dsdk>=3.0.0,<4.0.0",
     "structlog>=26.0.0,<27.0.0",
-    "numpy>=2.1.0,<3.0.0",
     "pandas[performance,plot,output-formatting,computation,parquet,fss,aws]>=2.3.0,<3.0.0",
 ]
 
