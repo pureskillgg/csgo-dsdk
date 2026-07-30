@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## 3.1.0 / 2026-07-30
+
+### Added
+
+- Scrub `player_chat.text` and cap `rank_update.win_count`, the two new rushb
+  channels carrying PII. `win_count` is the same quantity as `player_info.wins`,
+  already capped at 2501; both now read one shared constant.
+- `csds_pii_channel_instructions(manifest)` returns only the PII channels a CSDS
+  actually has. `get_channels` raises on a channel missing from the manifest, so
+  callers must filter or adding a channel breaks every older CSDS.
+
 ## 3.0.1 / 2026-06-14
 
 ### Fixed
