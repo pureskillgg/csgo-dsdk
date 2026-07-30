@@ -18,7 +18,27 @@ SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS = [
     {"channel": "player_personal"},
     {"channel": "player_info"},
     {"channel": "player_status"},
+    {"channel": "player_chat"},
+    {"channel": "rank_update"},
 ]
+
+WINS_CAP_THRESHOLD = 2500
+WINS_CAP_VALUE = 2501
+
+
+def csds_pii_channel_instructions(manifest: Dict):
+    """Reading instructions for the PII channels this CSDS actually has.
+
+    A CSDS written before a channel existed does not carry it, and get_channels
+    raises on a channel missing from the manifest. Filter with this before
+    loading, or adding a channel here breaks every older CSDS.
+    """
+    available = {channel["channel"] for channel in manifest["channels"]}
+    return [
+        instruction
+        for instruction in SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS
+        if instruction["channel"] in available
+    ]
 
 
 def scrub_csds_pii(manifest: Dict, data: Dict):
@@ -56,6 +76,10 @@ def scrub_csds_pii(manifest: Dict, data: Dict):
 
     replace_if_exists(data, manifest, "player_status", "ping", replacement=0)
 
+    replace_if_exists(data, manifest, "player_chat", "text")
+
+    cap_wins_like(data, manifest, "rank_update", "win_count")
+
     return manifest
 
 
@@ -78,6 +102,25 @@ def replace_if_exists(
             "origin"
         ] += "-redacted"
         manifest["channels"][channel_index]["redacted"] = True
+
+
+def cap_wins_like(data, manifest, channel, column):
+    """Cap a competitive-wins column so a high value cannot single a player out
+
+    The cap is not a parameter: player_info.wins and rank_update.win_count are
+    the same quantity, and one capped while the other is not leaks round it.
+    """
+    if not data_exists(data, channel, column):
+        return
+    df = data[channel]
+    df.loc[df[column] > WINS_CAP_THRESHOLD, column] = WINS_CAP_VALUE
+    data[channel] = df
+    channel_index, column_index = get_manifest_indexes(manifest, channel, column)
+    manifest["channels"][channel_index]["columns"][column_index]["origin"] += "-capped"
+    manifest["channels"][channel_index]["columns"][column_index][
+        "comment"
+    ] += f" Capped to {WINS_CAP_VALUE}."
+    manifest["channels"][channel_index]["redacted"] = True
 
 
 def get_manifest_indexes(manifest, channel, column):
@@ -140,9 +183,9 @@ def fix_commends_and_wins(data, manifest):
     pi = data["player_info"]
     columns = pi.columns
     if "wins" in columns:
-        index = pi["wins"] > 2500
-        pi.loc[index, "wins"] = 2501
-        cap_manifest_to_value("wins", value=2501)
+        index = pi["wins"] > WINS_CAP_THRESHOLD
+        pi.loc[index, "wins"] = WINS_CAP_VALUE
+        cap_manifest_to_value("wins", value=WINS_CAP_VALUE)
     if "commends_friendly" in columns:
         index = pi["commends_friendly"] > 100
         pi.loc[index, "commends_friendly"] = 101
