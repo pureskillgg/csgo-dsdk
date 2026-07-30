@@ -108,7 +108,7 @@ def cap_wins_like(data, manifest, channel, column):
     """Cap a competitive-wins column so a high value cannot single a player out
 
     The cap is not a parameter: player_info.wins and rank_update.win_count are
-    the same quantity, and one capped while the other is not leaks round it.
+    the same quantity, and one capped while the other is not leaks around it.
     """
     if not data_exists(data, channel, column):
         return

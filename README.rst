@@ -31,7 +31,7 @@ personally identifiable information (PII) or remove overtime rounds first.
 What it does
 ~~~~~~~~~~~~
 
-The package (``pureskillgg_csgo_dsdk``) exposes exactly four public symbols from
+The package (``pureskillgg_csgo_dsdk``) exposes exactly five public symbols from
 its top-level ``__init__``:
 
 - ``scrub_csds_pii`` - anonymize a CSDS match (manifest + per-channel
@@ -40,6 +40,8 @@ its top-level ``__init__``:
   DataFrame.
 - ``SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS`` - a constant list of the CSDS channels
   a caller should load before scrubbing.
+- ``csds_pii_channel_instructions`` - that list filtered to the channels a given
+  manifest actually has. Load through this, not the raw constant.
 - ``MissingColumns`` / ``UnsupportedChannelStructure`` - exceptions raised when a
   DataFrame lacks a required column.
 
@@ -50,8 +52,10 @@ the manifest it replaces ``jobId`` with the anonymous ``id`` everywhere (via a
 minutes. In the channel DataFrames it redacts identifying columns (``sharecode``
 and ``demo_id`` in ``header``; ``name_new`` / ``name_old`` in ``player_name``;
 ``name`` / ``clan_tag`` in ``player_personal``), maps each unique ``steam_id`` to
-a letter (``A``, ``B``, ``C`` ...), zeroes ``ping`` in ``player_status``, and
-caps inflated ``player_info`` stats (``wins`` over 2500 to 2501; each of
+a letter (``A``, ``B``, ``C`` ...), zeroes ``ping`` in ``player_status``,
+redacts ``text`` in ``player_chat``, and caps inflated stats (``player_info``
+``wins`` and ``rank_update`` ``win_count`` — the same quantity — over 2500 to
+2501; each of
 ``commends_friendly`` / ``commends_leader`` / ``commends_teacher`` over 100 to
 101). Every mutation also tags the corresponding manifest column ``origin`` with
 ``-redacted`` or ``-capped`` and flips that channel's ``redacted`` flag.
@@ -100,8 +104,15 @@ this package owns no AWS resources, queues, tables, or log groups.
   overtime rows. Raises ``MissingColumns`` if there is no ``round`` column.
 - ``SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS`` - list of channel descriptors
   (``player_name``, ``header``, ``player_personal``, ``player_info``,
-  ``player_status``) telling callers which CSDS channels to load before running
-  ``scrub_csds_pii``.
+  ``player_status``, ``player_chat``, ``rank_update``) telling callers which CSDS
+  channels to load before running ``scrub_csds_pii``.
+- ``csds_pii_channel_instructions(manifest)`` - the same list, filtered to the
+  channels present in ``manifest``. ``get_channels`` raises on a channel missing
+  from the manifest, so a CSDS written before a channel existed fails if the raw
+  constant is passed through; filter with this instead::
+
+    data = loader.get_channels(csds_pii_channel_instructions(loader.manifest))
+    manifest = scrub_csds_pii(loader.manifest, data)
 - ``MissingColumns`` / ``UnsupportedChannelStructure`` - error types signaling a
   DataFrame lacks a required column. ``MissingColumns`` subclasses
   ``UnsupportedChannelStructure`` and carries the offending column names on its

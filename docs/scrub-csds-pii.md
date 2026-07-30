@@ -16,9 +16,22 @@ Source: `pureskillgg_csgo_dsdk/scrubber/scrub_pii.py`.
 - `data` (dict): a mapping of channel name to a pandas DataFrame. This is
   mutated **in place** and is not returned.
 
-Before calling, load the channels listed in
-`SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS`: `player_name`, `header`,
-`player_personal`, `player_info`, `player_status`.
+Before calling, load the PII channels. **Filter the instruction list against
+the manifest first** — `get_channels` raises on a channel missing from the
+manifest, and a CSDS written before a channel existed does not carry it:
+
+```python
+from pureskillgg_csgo_dsdk import csds_pii_channel_instructions, scrub_csds_pii
+
+data = loader.get_channels(csds_pii_channel_instructions(loader.manifest))
+manifest = scrub_csds_pii(loader.manifest, data)
+```
+
+Passing `SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS` to `get_channels` unfiltered works
+only while every listed channel happens to be present, and breaks whenever a
+channel is added to the list. The list is `player_name`, `header`,
+`player_personal`, `player_info`, `player_status`, `player_chat`,
+`rank_update`.
 
 ## What happens to the manifest
 
@@ -50,12 +63,19 @@ missing a channel/column is skipped rather than erroring.
 | `player_personal` | `name`, `clan_tag` | overwritten with `"redacted"` |
 | `player_personal` | `steam_id` | mapped to letters `A`, `B`, `C` ... |
 | `player_status` | `ping` | set to `0` |
+| `player_chat` | `text` | overwritten with `"redacted"` |
 | `player_info` | `wins` | values over 2500 clamped to 2501 (capped) |
+| `rank_update` | `win_count` | values over 2500 clamped to 2501 (capped) |
 | `player_info` | `commends_friendly`, `commends_leader`, `commends_teacher` | values over 100 clamped to 101 (capped) |
 
 Note that player names live under `name_new` / `name_old` in the `player_name`
 channel and under `name` in `player_personal` — there is no single `name`
 column covering all of them.
+
+`player_info.wins` and `rank_update.win_count` are the same quantity, so they
+share one cap (`WINS_CAP_THRESHOLD` / `WINS_CAP_VALUE`). Capping one without the
+other would leak around the rule. Only `text` is removed from `player_chat`:
+who spoke and when is kept.
 
 ### `steam_id` letter mapping
 

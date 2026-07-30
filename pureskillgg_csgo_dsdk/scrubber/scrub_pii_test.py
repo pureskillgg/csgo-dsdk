@@ -1,16 +1,13 @@
 # pylint: disable=missing-docstring
-# pylint: disable=unused-import
 
 import copy
 import os
 import pandas as pd
-import pytest
 import dateutil.parser
 from pureskillgg_dsdk import GameDsLoader, DsReaderFs
 
 from .scrub_pii import (
     scrub_csds_pii,
-    SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS,
     csds_pii_channel_instructions,
     WINS_CAP_VALUE,
 )
@@ -98,7 +95,7 @@ def test_redacts_chat_text():
 
 def test_caps_rank_update_win_count_like_player_info_wins():
     # rank_update.win_count is the same quantity as player_info.wins, which is
-    # already capped -- an uncapped copy in a new channel would leak round it
+    # already capped -- an uncapped copy in a new channel would leak around it
     manifest = _manifest(("rank_update", ["round", "tick", "player_id", "win_count"]))
     data = {
         "rank_update": pd.DataFrame(
