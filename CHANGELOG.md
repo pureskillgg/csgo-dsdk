@@ -9,20 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
-- Harden the deploy workflows: pass the version input through `env:` instead of interpolating it into the shell line; give the dispatch and tag workflows readable run titles.
-
-- GitHub Actions updated to Node 24 runtimes: `actions/checkout` v5 to v7; `astral-sh/setup-uv` v8.2.0 to v9.0.0.
+- Harden the deploy workflows.
+- Update GitHub Actions to Node 24 runtimes.
 
 ## 3.1.0 / 2026-07-30
 
 ### Added
 
-- Scrub `player_chat.text` and cap `rank_update.win_count`, the two new rushb
-  channels carrying PII. `win_count` is the same quantity as `player_info.wins`,
-  already capped at 2501; both now read one shared constant.
-- `csds_pii_channel_instructions(manifest)` returns only the PII channels a CSDS
-  actually has. `get_channels` raises on a channel missing from the manifest, so
-  callers must filter or adding a channel breaks every older CSDS.
+- Scrub `player_chat.text` and cap `rank_update.win_count`.
+- `csds_pii_channel_instructions(manifest)` for per-CSDS PII channels.
 
 ## 3.0.1 / 2026-06-14
 
