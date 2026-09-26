@@ -12,6 +12,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Harden the deploy workflows.
 - Update GitHub Actions to Node.js 24 runtimes.
 
+### Fixed
+
+- `pop_overtime` keeps rows with a missing `round` instead of dropping them.
+- `pop_overtime` no longer drops regulation rows that share an index label with an overtime row.
+- Document `max_rounds_csgo` for CS2: pass 24 (MR12); the default 30 is CS:GO MR15.
+
 ## 3.1.0 / 2026-07-30
 
 ### Added

@@ -42,7 +42,7 @@ def csds_pii_channel_instructions(manifest: Dict):
 
 
 def scrub_csds_pii(manifest: Dict, data: Dict):
-    """Remove events in overtime rounds
+    """Anonymize a CSDS match: returns the scrubbed manifest, mutates data in place
 
     Inputs:
         manifest (dict): CSDS manifest.
