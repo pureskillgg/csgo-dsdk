@@ -77,5 +77,44 @@ def test_regular_match():
     assert isinstance(data_overtime["round_state"], pd.DataFrame)
 
 
-test_unsupported_channel_structure_error_usage()
-test_missing_columns_error_usage()
+@pytest.mark.parametrize(
+    "rounds",
+    [
+        pd.array([1.0, float("nan"), 31.0, 30.0], dtype="float64"),
+        pd.array([1, None, 31, 30], dtype="Int64"),
+    ],
+)
+def test_missing_round_is_not_overtime(rounds):
+    df = pd.DataFrame({"round": rounds, "x": ["a", "b", "c", "d"]})
+
+    overtime = pop_overtime(df)
+
+    assert list(overtime["x"]) == ["c"]
+    assert list(overtime.index) == [2]
+    assert list(df["x"]) == ["a", "b", "d"]
+    assert list(df.index) == [0, 1, 3]
+    assert df["round"].isna().sum() == 1
+
+
+def test_duplicate_index_labels():
+    regulation = pd.DataFrame({"round": [29, 30], "x": ["a", "b"]})
+    extra_time = pd.DataFrame({"round": [31, 32], "x": ["c", "d"]})
+    df = pd.concat([regulation, extra_time])
+
+    overtime = pop_overtime(df)
+
+    pd.testing.assert_frame_equal(df, regulation)
+    pd.testing.assert_frame_equal(overtime, extra_time)
+
+
+def test_removes_rows_in_place_and_keeps_order():
+    df = pd.DataFrame(
+        {"round": [1, 31, 2, 32, 3], "x": ["a", "b", "c", "d", "e"]},
+        index=[10, 11, 12, 13, 14],
+    )
+    callers_df = df
+
+    pop_overtime(df)
+
+    assert list(callers_df["x"]) == ["a", "c", "e"]
+    assert list(callers_df.index) == [10, 12, 14]
