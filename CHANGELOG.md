@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Changed
 
 - Depend only on what the package imports: pandas, python-dateutil and python-rapidjson. `pureskillgg-dsdk` (now a dev dependency, for the tests) and `structlog` are no longer installed with it.
+- Allow pandas 3. On pandas 3, the scrubbed string columns are the new `str` dtype; the values are unchanged.
 
 ## 3.1.1
 
