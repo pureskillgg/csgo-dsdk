@@ -26,11 +26,15 @@ Requires Python 3.11 or later.
 
     $ uv add pureskillgg-csgo-dsdk
 
+It does not install pureskillgg-dsdk. The example below loads the match with
+it, so add it too::
+
+    $ uv add pureskillgg-dsdk
+
 Usage
 -----
 
-Scrub a match, then pop overtime (this loads with pureskillgg-dsdk, which you
-install separately):
+Scrub a match, then pop overtime:
 
 .. code-block:: python
 
@@ -103,7 +107,8 @@ The tasks are in the ``Makefile``: ``make lint``, ``make test``, ``make watch``
 Publishing
 ~~~~~~~~~~
 
-Set the new version with ``uv version``, then run ``make version``. It commits
+Set the new version with ``uv version <version>`` (or ``uv version --bump
+patch``), then run ``make version``. It commits
 ``pyproject.toml`` and ``uv.lock`` and pushes a signed ``v*`` tag, which
 triggers the publish workflow. Or run the `version workflow`_ by hand with a
 version number or a bump (``patch``, ``minor``, ``major``); it does both steps.
