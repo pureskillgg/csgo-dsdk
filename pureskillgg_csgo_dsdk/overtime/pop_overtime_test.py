@@ -5,7 +5,6 @@ import os
 import pytest
 from pureskillgg_dsdk import GameDsLoader, DsReaderFs
 import pandas as pd
-import structlog
 
 from .pop_overtime import pop_overtime
 from ..errors import MissingColumns, UnsupportedChannelStructure
