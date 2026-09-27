@@ -7,9 +7,9 @@ license = "MIT"
 readme = "README.rst"
 requires-python = ">=3.11"
 dependencies = [
-    "pureskillgg-dsdk>=3.0.0,<4.0.0",
-    "structlog>=26.0.0,<27.0.0",
-    "pandas[performance,plot,output-formatting,computation,parquet,fss,aws]>=2.3.0,<3.0.0",
+    "pandas>=2.3.0,<3.0.0",
+    "python-dateutil>=2.9.0,<3.0.0",
+    "python-rapidjson>=1.23.0,<2.0.0",
 ]
 
 [project.urls]
@@ -18,6 +18,7 @@ Repository = "https://github.com/pureskillgg/csgo-dsdk"
 
 [dependency-groups]
 dev = [
+    "pureskillgg-dsdk>=3.0.0,<4.0.0",
     "black>=26.0.0,<27.0.0",
     "pylint>=4.0.0,<5.0.0",
     "pytest>=9.0.0,<10.0.0",

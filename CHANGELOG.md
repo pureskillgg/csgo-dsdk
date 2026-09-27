@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 - Harden the deploy workflows.
 - Update GitHub Actions to Node.js 24 runtimes.
+- Depend only on what the package imports: pandas, python-dateutil and python-rapidjson. `pureskillgg-dsdk` (now a dev dependency, for the tests) and `structlog` are no longer installed with it.
 
 ### Fixed
 

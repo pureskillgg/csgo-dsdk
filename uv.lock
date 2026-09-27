@@ -1648,14 +1648,15 @@ name = "pureskillgg-csgo-dsdk"
 version = "3.1.1"
 source = { editable = "." }
 dependencies = [
-    { name = "pandas", extra = ["aws", "computation", "fss", "output-formatting", "parquet", "performance", "plot"] },
-    { name = "pureskillgg-dsdk" },
-    { name = "structlog" },
+    { name = "pandas" },
+    { name = "python-dateutil" },
+    { name = "python-rapidjson" },
 ]
 
 [package.dev-dependencies]
 dev = [
     { name = "black" },
+    { name = "pureskillgg-dsdk" },
     { name = "pylint" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -1664,14 +1665,15 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "pandas", extras = ["performance", "plot", "output-formatting", "computation", "parquet", "fss", "aws"], specifier = ">=2.3.0,<3.0.0" },
-    { name = "pureskillgg-dsdk", specifier = ">=3.0.0,<4.0.0" },
-    { name = "structlog", specifier = ">=26.0.0,<27.0.0" },
+    { name = "pandas", specifier = ">=2.3.0,<3.0.0" },
+    { name = "python-dateutil", specifier = ">=2.9.0,<3.0.0" },
+    { name = "python-rapidjson", specifier = ">=1.23.0,<2.0.0" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "black", specifier = ">=26.0.0,<27.0.0" },
+    { name = "pureskillgg-dsdk", specifier = ">=3.0.0,<4.0.0" },
     { name = "pylint", specifier = ">=4.0.0,<5.0.0" },
     { name = "pytest", specifier = ">=9.0.0,<10.0.0" },
     { name = "pytest-cov", specifier = ">=7.0.0,<8.0.0" },
