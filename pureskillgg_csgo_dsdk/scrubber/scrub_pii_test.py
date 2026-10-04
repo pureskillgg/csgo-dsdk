@@ -3,12 +3,14 @@
 import copy
 import os
 import pandas as pd
+import pytest
 import dateutil.parser
 from pureskillgg_dsdk import GameDsLoader, DsReaderFs
 
 from .scrub_pii import (
     scrub_csds_pii,
     csds_pii_channel_instructions,
+    replace_if_exists,
     WINS_CAP_VALUE,
 )
 
@@ -91,6 +93,31 @@ def test_redacts_chat_text():
     assert chat["redacted"] is True
     text_col = [c for c in chat["columns"] if c["name"] == "text"][0]
     assert text_col["origin"].endswith("-redacted")
+
+
+@pytest.mark.parametrize("dtype", ["int16", "Int16", "int64", "Int64"])
+def test_redacted_ping_keeps_its_dtype(dtype):
+    # narrower csds store ping as int16; the zero that replaces it stays int16
+    manifest = _manifest(("player_status", ["tick", "ping"]))
+    data = {
+        "player_status": pd.DataFrame(
+            {"tick": [10, 11], "ping": pd.Series([35, 40], dtype=dtype)}
+        )
+    }
+
+    manifest = scrub_csds_pii(manifest, data)
+
+    assert data["player_status"]["ping"].dtype == dtype
+    assert list(data["player_status"]["ping"]) == [0, 0]
+    assert manifest["channels"][0]["redacted"] is True
+
+
+def test_a_number_that_does_not_fit_the_column_raises():
+    manifest = _manifest(("player_status", ["ping"]))
+    data = {"player_status": pd.DataFrame({"ping": pd.Series([1, 2], dtype="int8")})}
+
+    with pytest.raises((OverflowError, TypeError, ValueError)):
+        replace_if_exists(data, manifest, "player_status", "ping", replacement=1000)
 
 
 def test_caps_rank_update_win_count_like_player_info_wins():
