@@ -8,6 +8,7 @@ Scrub PII from your data
 from typing import Dict, Union
 from numbers import Number
 import dateutil.parser
+import pandas as pd
 import rapidjson
 
 REDACTED = "redacted"
@@ -94,14 +95,33 @@ def data_exists(data, channel, column):
 def replace_if_exists(
     data, manifest, channel, column, /, replacement: Union[str, bool, Number] = REDACTED
 ):
-    """Replace a column with a certain value if it exists"""
+    """Replace a column with a certain value if it exists
+
+    A number replacing a numeric column keeps the column's dtype, so an int16
+    ping stays int16; it raises if the number doesn't fit that dtype.
+    """
     if data_exists(data, channel, column):
-        data[channel][column] = replacement
+        df = data[channel]
+        dtype = df[column].dtype
+        if keeps_dtype(replacement, dtype):
+            df[column] = pd.Series(replacement, index=df.index, dtype=dtype)
+        else:
+            df[column] = replacement
         channel_index, column_index = get_manifest_indexes(manifest, channel, column)
         manifest["channels"][channel_index]["columns"][column_index][
             "origin"
         ] += "-redacted"
         manifest["channels"][channel_index]["redacted"] = True
+
+
+def keeps_dtype(replacement, dtype):
+    """Whether a replacement keeps the column's dtype: a number in a numeric column"""
+    return (
+        isinstance(replacement, Number)
+        and not isinstance(replacement, bool)
+        and pd.api.types.is_numeric_dtype(dtype)
+        and not pd.api.types.is_bool_dtype(dtype)
+    )
 
 
 def cap_wins_like(data, manifest, channel, column):
