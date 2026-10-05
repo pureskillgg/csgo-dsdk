@@ -233,7 +233,9 @@ def calc_movement_angle(x_vel: pd.Series, y_vel: pd.Series, /) -> pd.Series:
     Standing still reads 0, the same as moving along +x.
     """
     angle = np.arctan2(y_vel, x_vel) * 360.0 / (2 * np.pi)
-    return angle.mask(angle < 0, angle + 360)
+    angle = angle.mask(angle < 0, angle + 360)
+    # arctan2 tells -0.0 from 0.0, so a stationary -0.0 would read 180.
+    return angle.mask((x_vel == 0) & (y_vel == 0), 0.0)
 
 
 def calc_movement_angle_diff(
@@ -266,6 +268,9 @@ def _steps(df, second, columns, group_by):
 
     A group's first row gets 1 for `second` and 0 for the columns, so every
     rate there is 0. A row with a missing key has no group and stays missing.
+    A missing value inside a group reads as a group start too, for its own row
+    and the next: csgo-ppp does the same, and its positions and angles are
+    never missing.
     """
     keys = list(group_by)
     work = df[keys].copy()
