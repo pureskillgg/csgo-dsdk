@@ -102,7 +102,7 @@ The values are the ones csgo-ppp writes:
   units a second (the engine's cap) is a teleport and reads 0 too.
 - ``movement_angle`` is the direction of movement, 0 to 360.
   ``movement_angle_diff`` is where the player looks minus where they move,
-  -180 to 180, and missing when they stand still.
+  -180 to 180. Both are missing when the player stands still.
 - ``second`` is ``tick`` over the tick rate: 64 in CS2. Pass ``tick_rate``
   for a CS:GO match; it is in the match's header.
 

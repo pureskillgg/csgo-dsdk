@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
 
+### Changed
+
+- `movement_angle` is missing while standing still, from `calc_movement_angle` and so from `add_player_vector_derived_columns`. It read 0, the same as moving along +x. csgo-ppp writes it the same way from [csgo-ppp#189](https://github.com/pureskillgg/csgo-ppp/pull/189) on; files written before store 0 there.
+
+## 3.3.0
+
 ### Added
 
 - `add_player_vector_derived_columns` adds the ten `player_vector` columns that csgo-ppp computes from the columns read from the demo: `second`, `x_vel`, `y_vel`, `z_vel`, `speed_2d`, `movement_angle`, `movement_angle_diff`, `phi_vel`, `theta_vel` and `ang_vel`. csgo-ppp will stop storing them, and readers compute them on load with this function. It gives the values csgo-ppp writes: motion restarts at every round, a teleport reads as standing still, and `movement_angle_diff` is the look-minus-move angle from -180 to 180, missing when standing still. A file that still stores the columns comes out the same, since they are replaced, not read. `columns` adds only some of them, and `group_by` keeps the matches of a tome apart.

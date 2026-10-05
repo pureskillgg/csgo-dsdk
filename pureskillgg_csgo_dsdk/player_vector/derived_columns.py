@@ -230,12 +230,13 @@ def calc_speed_2d(x_vel: pd.Series, y_vel: pd.Series, /) -> pd.Series:
 def calc_movement_angle(x_vel: pd.Series, y_vel: pd.Series, /) -> pd.Series:
     """The direction of movement over the ground, in degrees from 0 to 360
 
-    Standing still reads 0, the same as moving along +x.
+    Standing still has no direction of movement, so it is missing.
     """
     angle = np.arctan2(y_vel, x_vel) * 360.0 / (2 * np.pi)
     angle = angle.mask(angle < 0, angle + 360)
-    # arctan2 tells -0.0 from 0.0, so a stationary -0.0 would read 180.
-    return angle.mask((x_vel == 0) & (y_vel == 0), 0.0)
+    # Tested on the velocities, not the angle: arctan2 tells -0.0 from 0.0,
+    # so a stationary -0.0 would read 180.
+    return angle.mask((x_vel == 0) & (y_vel == 0))
 
 
 def calc_movement_angle_diff(
