@@ -1650,7 +1650,7 @@ wheels = [
 
 [[package]]
 name = "pureskillgg-csgo-dsdk"
-version = "3.2.2"
+version = "3.3.0"
 source = { editable = "." }
 dependencies = [
     { name = "numpy" },
