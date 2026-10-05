@@ -142,22 +142,21 @@ def test_speed_2d():
 
 
 def test_movement_angle_is_from_0_to_360():
-    x_vel = pd.Series([1.0, 0.0, -1.0, 0.0, 0.0])
-    y_vel = pd.Series([0.0, 1.0, 0.0, -1.0, 0.0])
+    x_vel = pd.Series([1.0, 0.0, -1.0, 0.0])
+    y_vel = pd.Series([0.0, 1.0, 0.0, -1.0])
     angle = calc_movement_angle(x_vel, y_vel)
 
-    # standing still reads 0, like moving along +x
-    assert angle.round(6).tolist() == [0.0, 90.0, 180.0, 270.0, 0.0]
+    assert angle.round(6).tolist() == [0.0, 90.0, 180.0, 270.0]
 
 
-def test_standing_still_reads_0_whatever_the_sign_of_zero():
-    # arctan2(0.0, -0.0) is 180 degrees
-    x_vel = pd.Series([-0.0, -0.0, 0.0, 0.0])
-    y_vel = pd.Series([0.0, -0.0, -0.0, 0.0])
+def test_standing_still_has_no_movement_angle_whatever_the_sign_of_zero():
+    # it read 0, the same as moving along +x; and arctan2(0.0, -0.0) is 180
+    x_vel = pd.Series([-0.0, -0.0, 0.0, 0.0, 1.0])
+    y_vel = pd.Series([0.0, -0.0, -0.0, 0.0, 0.0])
     angle = calc_movement_angle(x_vel, y_vel)
 
-    assert angle.tolist() == [0.0, 0.0, 0.0, 0.0]
-    assert not np.signbit(angle).any()
+    assert angle.isna().tolist() == [True, True, True, True, False]
+    assert angle.iloc[4] == 0.0
 
 
 def _looking_and_moving(*rows):
