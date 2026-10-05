@@ -12,8 +12,10 @@ PureSkill.gg CS:GO Data Science Development Kit
 
 Counter-Strike helpers for CSDS match data (a manifest plus one pandas
 DataFrame per channel). ``scrub_csds_pii`` anonymizes a match before it leaves
-the platform, and ``pop_overtime`` removes overtime rounds from a channel. It
-works on data you have already loaded, usually with pureskillgg-dsdk_.
+the platform, ``pop_overtime`` removes overtime rounds from a channel, and
+``add_player_vector_derived_columns`` computes ``player_vector``'s velocities
+and movement angles. It works on data you have already loaded, usually with
+pureskillgg-dsdk_.
 
 .. _pureskillgg-dsdk: https://pypi.python.org/pypi/pureskillgg-dsdk
 
@@ -67,6 +69,50 @@ and marks every changed column in the manifest. `docs/scrub-csds-pii.md
 Rows with a missing ``round`` stay. A channel without a ``round`` column raises
 ``MissingColumns``.
 
+Derived player_vector columns
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Ten ``player_vector`` columns are computed from the columns read from the
+demo: ``second``, ``x_vel``, ``y_vel``, ``z_vel``, ``speed_2d``,
+``movement_angle``, ``movement_angle_diff``, ``phi_vel``, ``theta_vel`` and
+``ang_vel``. Compute them after loading:
+
+.. code-block:: python
+
+    from pureskillgg_csgo_dsdk import (
+        add_player_vector_derived_columns,
+        player_vector_source_columns,
+    )
+
+    # Everything, on a whole player_vector.
+    player_vector = loader.get_channel({"channel": "player_vector"})
+    add_player_vector_derived_columns(player_vector)  # added in place
+
+    # Or load only what two of them need.
+    wanted = ["speed_2d", "z_vel"]
+    player_vector = loader.get_channel(
+        {"channel": "player_vector", "columns": player_vector_source_columns(wanted)}
+    )
+    add_player_vector_derived_columns(player_vector, columns=wanted)
+
+The values are the ones csgo-ppp writes:
+
+- Velocities are differenced per player per round, so each player's first
+  sample in a round reads 0. A sample where any axis moved faster than 3,500
+  units a second (the engine's cap) is a teleport and reads 0 too.
+- ``movement_angle`` is the direction of movement, 0 to 360.
+  ``movement_angle_diff`` is where the player looks minus where they move,
+  -180 to 180, and missing when they stand still.
+- ``second`` is ``tick`` over the tick rate: 64 in CS2. Pass ``tick_rate``
+  for a CS:GO match; it is in the match's header.
+
+A derived column the frame already has is replaced, never read, so a file that
+stores them comes out the same as one that doesn't. Rows must be in tick order
+within each player and round, as csgo-ppp writes them. For a frame holding
+more than one match, such as a tome, pass
+``group_by=["match_key", "player_id", "round"]``. A frame that lacks a column
+they are computed from raises ``MissingColumns``.
+
 Exports
 -------
 
@@ -82,6 +128,12 @@ Exports
        older CSDS may not have
    * - ``pop_overtime``
      - csgo-coach's economy course
+   * - ``add_player_vector_derived_columns``, ``player_vector_source_columns``,
+       ``PLAYER_VECTOR_DERIVED_COLUMNS``
+     - readers of ``player_vector`` that need its velocities, movement angles
+       or ``second``
+   * - ``pureskillgg_csgo_dsdk.player_vector``'s ``calc_*`` functions
+     - csgo-ppp's converter, which computes the same columns step by step
    * - ``MissingColumns``, ``UnsupportedChannelStructure``
      - raised when a DataFrame lacks a required column
 

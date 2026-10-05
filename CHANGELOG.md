@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## Unreleased
+
+### Added
+
+- `add_player_vector_derived_columns` adds the ten `player_vector` columns that csgo-ppp computes from the columns read from the demo: `second`, `x_vel`, `y_vel`, `z_vel`, `speed_2d`, `movement_angle`, `movement_angle_diff`, `phi_vel`, `theta_vel` and `ang_vel`. csgo-ppp will stop storing them, and readers compute them on load with this function. It gives the values csgo-ppp writes: motion restarts at every round, a teleport reads as standing still, and `movement_angle_diff` is the look-minus-move angle from -180 to 180, missing when standing still. A file that still stores the columns comes out the same, since they are replaced, not read. `columns` adds only some of them, and `group_by` keeps the matches of a tome apart.
+- `player_vector_source_columns` lists the columns to load for them, and `PLAYER_VECTOR_DERIVED_COLUMNS` names the ten.
+- `pureskillgg_csgo_dsdk.player_vector` also has each step on its own (`calc_velocity`, `calc_angular_velocity`, `calc_speed_2d`, `calc_movement_angle`, `calc_movement_angle_diff`), which csgo-ppp calls.
+
+### Changed
+
+- numpy is a direct dependency. It was already installed with pandas.
+
 ## 3.2.2
 
 ### Fixed
