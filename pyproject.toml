@@ -19,7 +19,7 @@ Repository = "https://github.com/pureskillgg/csgo-dsdk"
 
 [dependency-groups]
 dev = [
-    "pureskillgg-dsdk>=3.0.0,<4.0.0",
+    "pureskillgg-dsdk>=4.0.1,<5.0.0",
     "black>=26.0.0,<27.0.0",
     "pylint>=4.0.0,<5.0.0",
     "pytest>=9.0.0,<10.0.0",
@@ -28,7 +28,7 @@ dev = [
 ]
 
 [build-system]
-requires = ["uv_build>=0.11,<0.12"]
+requires = ["uv_build>=0.11,<0.14"]
 build-backend = "uv_build"
 
 [tool.uv.build-backend]

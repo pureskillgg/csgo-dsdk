@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Changed
 
 - Pin workflow runners to `ubuntu-24.04`.
+- Test against pureskillgg-dsdk 4 and pandas 3.
+- Build with uv_build 0.13 and run CI on uv 0.13.0.
+- Refresh the lock to the newest allowed versions.
 
 ## 3.3.1
 
