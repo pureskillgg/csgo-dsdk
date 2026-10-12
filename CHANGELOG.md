@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## Unreleased
+
+### Added
+
+- The PII scrubber reads csgo-rushb's new `convar` channel (the server settings) when a CSDS has it, and redacts the value of `steamworks_sessionid_server`: the server's Steam session leads back to the exact match, as the share code and demo id do. The setting's row and tick stay, and every other setting is untouched. CSDS without the channel scrub as before.
+
 ## 3.3.2
 
 ### Changed

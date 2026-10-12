@@ -21,7 +21,13 @@ SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS = [
     {"channel": "player_status"},
     {"channel": "player_chat"},
     {"channel": "rank_update"},
+    {"channel": "convar"},
 ]
+
+# Server settings in the convar channel whose value names the match: the
+# server's Steam session leads back to the exact game, as the share code and
+# demo id do. Only the value goes; that the setting was sent, and when, stays.
+REDACTED_CONVARS = {"steamworks_sessionid_server"}
 
 WINS_CAP_THRESHOLD = 2500
 WINS_CAP_VALUE = 2501
@@ -81,6 +87,8 @@ def scrub_csds_pii(manifest: Dict, data: Dict):
 
     cap_wins_like(data, manifest, "rank_update", "win_count")
 
+    redact_convars(data, manifest)
+
     return manifest
 
 
@@ -112,6 +120,21 @@ def replace_if_exists(
             "origin"
         ] += "-redacted"
         manifest["channels"][channel_index]["redacted"] = True
+
+
+def redact_convars(data, manifest):
+    """Redact the values of the convar rows that name the match"""
+    if not (
+        data_exists(data, "convar", "name") and data_exists(data, "convar", "value")
+    ):
+        return
+    df = data["convar"]
+    df.loc[df["name"].isin(REDACTED_CONVARS), "value"] = REDACTED
+    channel_index, column_index = get_manifest_indexes(manifest, "convar", "value")
+    column = manifest["channels"][channel_index]["columns"][column_index]
+    column["origin"] += "-redacted"
+    column["comment"] += " Redacted for " + ", ".join(sorted(REDACTED_CONVARS)) + "."
+    manifest["channels"][channel_index]["redacted"] = True
 
 
 def keeps_dtype(replacement, dtype):
