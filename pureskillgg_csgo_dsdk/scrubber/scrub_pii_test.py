@@ -95,6 +95,42 @@ def test_redacts_chat_text():
     assert text_col["origin"].endswith("-redacted")
 
 
+def test_redacts_the_server_session_convar():
+    manifest = _manifest(("convar", ["round", "tick", "name", "value"]))
+    data = {
+        "convar": pd.DataFrame(
+            {
+                "round": [0, 1],
+                "tick": [0, 84],
+                "name": ["mp_maxrounds", "steamworks_sessionid_server"],
+                "value": ["24", "8947377548882"],
+            }
+        )
+    }
+
+    manifest = scrub_csds_pii(manifest, data)
+
+    # the setting and its tick stay; only the session id goes
+    assert list(data["convar"]["value"]) == ["24", "redacted"]
+    assert list(data["convar"]["name"]) == [
+        "mp_maxrounds",
+        "steamworks_sessionid_server",
+    ]
+    convar = manifest["channels"][0]
+    assert convar["redacted"] is True
+    value_col = [c for c in convar["columns"] if c["name"] == "value"][0]
+    assert value_col["origin"].endswith("-redacted")
+    assert value_col["comment"].endswith("Redacted for steamworks_sessionid_server.")
+
+
+def test_convar_is_read_only_when_the_csds_has_it():
+    with_it = _manifest(("convar", ["name", "value"]), ("header", ["demo_id"]))
+    without = _manifest(("header", ["demo_id"]))
+
+    assert {"channel": "convar"} in csds_pii_channel_instructions(with_it)
+    assert {"channel": "convar"} not in csds_pii_channel_instructions(without)
+
+
 @pytest.mark.parametrize("dtype", ["int16", "Int16", "int64", "Int64"])
 def test_redacted_ping_keeps_its_dtype(dtype):
     # narrower csds store ping as int16; the zero that replaces it stays int16
