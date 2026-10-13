@@ -120,6 +120,7 @@ def test_redacts_the_server_session_convar():
     assert convar["redacted"] is True
     value_col = [c for c in convar["columns"] if c["name"] == "value"][0]
     assert value_col["origin"].endswith("-redacted")
+    assert value_col["comment"].endswith("Redacted for steamworks_sessionid_server.")
 
 
 def test_convar_is_read_only_when_the_csds_has_it():
