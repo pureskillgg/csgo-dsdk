@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Added
 
 - The PII scrubber reads csgo-rushb's new `convar` channel (the server settings) when a CSDS has it, and redacts the value of `steamworks_sessionid_server`: the server's Steam session leads back to the exact match, as the share code and demo id do. The setting's row and tick stay, and every other setting is untouched. CSDS without the channel scrub as before.
+- The PII scrubber redacts csgo-rushb's new client-settings columns on `player_personal`: `crosshair_code` becomes `"redacted"`, and `viewmodel_offset_x`, `viewmodel_offset_y`, `viewmodel_offset_z` and `viewmodel_fov` become null. A custom crosshair code is close to unique per player and could link an anonymised player across matches. The rows stay. CSDS without the columns scrub as before.
 
 ## 3.3.2
 

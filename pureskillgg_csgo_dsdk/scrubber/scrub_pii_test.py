@@ -123,6 +123,50 @@ def test_redacts_the_server_session_convar():
     assert value_col["comment"].endswith("Redacted for steamworks_sessionid_server.")
 
 
+def test_redacts_the_client_settings():
+    settings = [
+        "viewmodel_offset_x",
+        "viewmodel_offset_y",
+        "viewmodel_offset_z",
+        "viewmodel_fov",
+    ]
+    manifest = _manifest(
+        (
+            "player_personal",
+            ["round", "player_id", "steam_id", "crosshair_code"] + settings,
+        )
+    )
+    data = {
+        "player_personal": pd.DataFrame(
+            {
+                "round": [1, 1],
+                "player_id": [3, 4],
+                "steam_id": ["76561190000000001", "76561190000000002"],
+                "crosshair_code": ["CSGO-aaaaa-bbbbb-ccccc-ddddd-eeeee", None],
+                "viewmodel_offset_x": pd.Series([1.0, 2.5], dtype="float32"),
+                "viewmodel_offset_y": pd.Series([1.0, 0.0], dtype="float32"),
+                "viewmodel_offset_z": pd.Series([-1.0, -1.5], dtype="float32"),
+                "viewmodel_fov": pd.Series([60.0, 68.0], dtype="float32"),
+            }
+        )
+    }
+
+    manifest = scrub_csds_pii(manifest, data)
+
+    pp = data["player_personal"]
+    # the rows stay; the crosshair code and the viewmodel settings go
+    assert list(pp["player_id"]) == [3, 4]
+    assert list(pp["crosshair_code"]) == ["redacted", "redacted"]
+    for column in settings:
+        assert pp[column].dtype == "float32", column
+        assert pp[column].isna().all(), column
+    personal = manifest["channels"][0]
+    assert personal["redacted"] is True
+    for col in personal["columns"]:
+        if col["name"] in ["crosshair_code"] + settings:
+            assert col["origin"].endswith("-redacted"), col["name"]
+
+
 def test_convar_is_read_only_when_the_csds_has_it():
     with_it = _manifest(("convar", ["name", "value"]), ("header", ["demo_id"]))
     without = _manifest(("header", ["demo_id"]))

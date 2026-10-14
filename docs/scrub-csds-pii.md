@@ -62,6 +62,8 @@ missing a channel/column is skipped rather than erroring.
 | `player_name` | `name_new`, `name_old` | overwritten with `"redacted"` |
 | `player_personal` | `name`, `clan_tag` | overwritten with `"redacted"` |
 | `player_personal` | `steam_id` | mapped to letters `A`, `B`, `C` ... |
+| `player_personal` | `crosshair_code` | overwritten with `"redacted"` (csgo-rushb's client settings; a custom crosshair code is close to unique per player) |
+| `player_personal` | `viewmodel_offset_x`, `viewmodel_offset_y`, `viewmodel_offset_z`, `viewmodel_fov` | set to null (NaN), keeping the column's float type |
 | `player_status` | `ping` | set to `0` |
 | `player_chat` | `text` | overwritten with `"redacted"` |
 | `player_info` | `wins` | values over 2500 clamped to 2501 (capped) |
