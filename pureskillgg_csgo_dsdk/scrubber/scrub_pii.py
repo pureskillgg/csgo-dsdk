@@ -29,6 +29,17 @@ SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS = [
 # demo id do. Only the value goes; that the setting was sent, and when, stays.
 REDACTED_CONVARS = {"steamworks_sessionid_server"}
 
+# A player's client settings in player_personal (csgo-rushb). Not identifiers on
+# their own, but a custom crosshair code is close to unique per player and could
+# link an anonymised player across matches; the viewmodel settings go with it.
+REDACTED_SETTINGS_TEXT = ["crosshair_code"]
+REDACTED_SETTINGS_NUMBERS = [
+    "viewmodel_offset_x",
+    "viewmodel_offset_y",
+    "viewmodel_offset_z",
+    "viewmodel_fov",
+]
+
 WINS_CAP_THRESHOLD = 2500
 WINS_CAP_VALUE = 2501
 
@@ -76,6 +87,12 @@ def scrub_csds_pii(manifest: Dict, data: Dict):
 
     replace_if_exists(data, manifest, "player_personal", "name")
     replace_if_exists(data, manifest, "player_personal", "clan_tag")
+    for column in REDACTED_SETTINGS_TEXT:
+        replace_if_exists(data, manifest, "player_personal", column)
+    for column in REDACTED_SETTINGS_NUMBERS:
+        replace_if_exists(
+            data, manifest, "player_personal", column, replacement=float("nan")
+        )
 
     fix_steam_ids(data, manifest)
 
