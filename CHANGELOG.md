@@ -5,12 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## Unreleased
+## 3.5.1
+
+### Changed
+
+- Rename the workflows as they show on the Actions tab (CI, Format, Cut version, Publish) with readable run titles; CI runs on pushes and pull requests to master and `ver/**`, so a fork's PR gets CI; one version cut at a time, with a required version input; the version tag is pushed only together with its branch (`git push --atomic`); format skips fork and Dependabot PRs.
+
+## 3.5.0
+
+### Added
+
+- The PII scrubber redacts csgo-rushb's new client-settings columns on `player_personal`: `crosshair_code` becomes `"redacted"`, and `viewmodel_offset_x`, `viewmodel_offset_y`, `viewmodel_offset_z` and `viewmodel_fov` become null. A custom crosshair code is close to unique per player and could link an anonymised player across matches. The rows stay. CSDS without the columns scrub as before.
+
+## 3.4.0
 
 ### Added
 
 - The PII scrubber reads csgo-rushb's new `convar` channel (the server settings) when a CSDS has it, and redacts the value of `steamworks_sessionid_server`: the server's Steam session leads back to the exact match, as the share code and demo id do. The setting's row and tick stay, and every other setting is untouched. CSDS without the channel scrub as before.
-- The PII scrubber redacts csgo-rushb's new client-settings columns on `player_personal`: `crosshair_code` becomes `"redacted"`, and `viewmodel_offset_x`, `viewmodel_offset_y`, `viewmodel_offset_z` and `viewmodel_fov` become null. A custom crosshair code is close to unique per player and could link an anonymised player across matches. The rows stay. CSDS without the columns scrub as before.
 
 ## 3.3.2
 

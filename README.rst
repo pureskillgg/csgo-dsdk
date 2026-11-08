@@ -6,7 +6,7 @@ PureSkill.gg CS:GO Data Science Development Kit
 .. |PyPI| image:: https://img.shields.io/pypi/v/pureskillgg-csgo-dsdk.svg
    :target: https://pypi.python.org/pypi/pureskillgg-csgo-dsdk
    :alt: PyPI
-.. |GitHub Actions| image:: https://github.com/pureskillgg/csgo-dsdk/workflows/main/badge.svg
+.. |GitHub Actions| image:: https://github.com/pureskillgg/csgo-dsdk/actions/workflows/main.yml/badge.svg
    :target: https://github.com/pureskillgg/csgo-dsdk/actions
    :alt: GitHub Actions
 
