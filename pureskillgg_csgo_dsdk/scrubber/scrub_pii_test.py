@@ -132,23 +132,30 @@ def test_redacts_the_faceit_match_id_convar():
     data = {
         "convar": pd.DataFrame(
             {
-                "round": [0, 0],
-                "tick": [0, 0],
+                "round": [0, 0, 0],
+                "tick": [0, 0, 0],
                 "name": [
                     "mp_guardian_bomb_plant_custom_x_mark_location",
                     "mp_freezetime",
+                    # names are case-insensitive in the engine
+                    "MP_Guardian_Bomb_Plant_Custom_X_Mark_Location",
                 ],
-                "value": ["1-00000000-0000-0000-0000-000000000000-1-1", "15"],
+                "value": [
+                    "1-00000000-0000-0000-0000-000000000000-1-1",
+                    "15",
+                    "1-00000000-0000-0000-0000-000000000000-1-1",
+                ],
             }
         )
     }
 
     scrub_csds_pii(manifest, data)
 
-    assert list(data["convar"]["value"]) == ["redacted", "15"]
+    assert list(data["convar"]["value"]) == ["redacted", "15", "redacted"]
     assert list(data["convar"]["name"]) == [
         "mp_guardian_bomb_plant_custom_x_mark_location",
         "mp_freezetime",
+        "MP_Guardian_Bomb_Plant_Custom_X_Mark_Location",
     ]
 
 

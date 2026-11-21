@@ -155,7 +155,9 @@ def redact_convars(data, manifest):
     ):
         return
     df = data["convar"]
-    df.loc[df["name"].isin(REDACTED_CONVARS), "value"] = REDACTED
+    # Setting names are case-insensitive in the engine
+    names = df["name"].fillna("").str.lower()
+    df.loc[names.isin(REDACTED_CONVARS), "value"] = REDACTED
     channel_index, column_index = get_manifest_indexes(manifest, "convar", "value")
     column = manifest["channels"][channel_index]["columns"][column_index]
     column["origin"] += "-redacted"
