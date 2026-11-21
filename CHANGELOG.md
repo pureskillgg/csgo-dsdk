@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## Unreleased
+
+### Added
+
+- The PII scrubber redacts two FACEIT identifiers. In `convar`, the value of `mp_guardian_bomb_plant_custom_x_mark_location` becomes `"redacted"`: FACEIT servers put their match id there, and the id opens the public match room with every player in it. In csgo-rushb's `team_info` channel, read when a CSDS has it, every `clan_name` that is set becomes `"redacted"`: FACEIT names each team after a player (`team_<nickname>`). Empty names, as Valve matchmaking sends, stay empty. The rows stay. CSDS without the channel scrub as before.
+
 ## 3.5.1
 
 ### Changed

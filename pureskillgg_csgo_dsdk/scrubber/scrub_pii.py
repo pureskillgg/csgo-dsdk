@@ -22,12 +22,19 @@ SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS = [
     {"channel": "player_chat"},
     {"channel": "rank_update"},
     {"channel": "convar"},
+    {"channel": "team_info"},
 ]
 
-# Server settings in the convar channel whose value names the match: the
-# server's Steam session leads back to the exact game, as the share code and
-# demo id do. Only the value goes; that the setting was sent, and when, stays.
-REDACTED_CONVARS = {"steamworks_sessionid_server"}
+# Server settings in the convar channel whose value names the match, as the
+# share code and demo id do. Only the value goes; that the setting was sent,
+# and when, stays.
+# - steamworks_sessionid_server: the server's Steam session.
+# - mp_guardian_bomb_plant_custom_x_mark_location: FACEIT servers put their
+#   match id here, which opens the public match room and every player in it.
+REDACTED_CONVARS = {
+    "steamworks_sessionid_server",
+    "mp_guardian_bomb_plant_custom_x_mark_location",
+}
 
 # A player's client settings in player_personal (csgo-rushb). Not identifiers on
 # their own, but a custom crosshair code is close to unique per player and could
@@ -106,6 +113,8 @@ def scrub_csds_pii(manifest: Dict, data: Dict):
 
     redact_convars(data, manifest)
 
+    redact_team_names(data, manifest)
+
     return manifest
 
 
@@ -151,6 +160,26 @@ def redact_convars(data, manifest):
     column = manifest["channels"][channel_index]["columns"][column_index]
     column["origin"] += "-redacted"
     column["comment"] += " Redacted for " + ", ".join(sorted(REDACTED_CONVARS)) + "."
+    manifest["channels"][channel_index]["redacted"] = True
+
+
+def redact_team_names(data, manifest):
+    """Redact the team names in team_info that are set
+
+    FACEIT names each team after a player (team_<nickname>). Valve matchmaking
+    sends no team names; those stay empty, as sent.
+    """
+    if not data_exists(data, "team_info", "clan_name"):
+        return
+    df = data["team_info"]
+    named = df["clan_name"].fillna("") != ""
+    df.loc[named, "clan_name"] = REDACTED
+    channel_index, column_index = get_manifest_indexes(
+        manifest, "team_info", "clan_name"
+    )
+    column = manifest["channels"][channel_index]["columns"][column_index]
+    column["origin"] += "-redacted"
+    column["comment"] += " Redacted where set; empty stays empty."
     manifest["channels"][channel_index]["redacted"] = True
 
 

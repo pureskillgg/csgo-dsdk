@@ -31,7 +31,7 @@ Passing `SCRUB_CSDS_PII_CHANNEL_INSTRUCTIONS` to `get_channels` unfiltered works
 only while every listed channel happens to be present, and breaks whenever a
 channel is added to the list. The list is `player_name`, `header`,
 `player_personal`, `player_info`, `player_status`, `player_chat`,
-`rank_update`, `convar`.
+`rank_update`, `convar`, `team_info`.
 
 ## What happens to the manifest
 
@@ -69,7 +69,8 @@ missing a channel/column is skipped rather than erroring.
 | `player_info` | `wins` | values over 2500 clamped to 2501 (capped) |
 | `rank_update` | `win_count` | values over 2500 clamped to 2501 (capped) |
 | `player_info` | `commends_friendly`, `commends_leader`, `commends_teacher` | values over 100 clamped to 101 (capped) |
-| `convar` | `value`, only on rows whose `name` is in `REDACTED_CONVARS` (`steamworks_sessionid_server`) | overwritten with `"redacted"`; the row, its tick and every other setting stay. The column's comment names the setting |
+| `convar` | `value`, only on rows whose `name` is in `REDACTED_CONVARS` (`steamworks_sessionid_server`, the server's Steam session; `mp_guardian_bomb_plant_custom_x_mark_location`, where FACEIT servers put their match id) | overwritten with `"redacted"`; the row, its tick and every other setting stay. The column's comment names the settings |
+| `team_info` | `clan_name`, only where it is set | overwritten with `"redacted"` (FACEIT names each team after a player, `team_<nickname>`); an empty name, as Valve matchmaking sends, stays empty |
 
 Note that player names live under `name_new` / `name_old` in the `player_name`
 channel and under `name` in `player_personal` — there is no single `name`
