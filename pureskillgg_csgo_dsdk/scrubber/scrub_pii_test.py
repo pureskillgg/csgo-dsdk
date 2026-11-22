@@ -120,7 +120,83 @@ def test_redacts_the_server_session_convar():
     assert convar["redacted"] is True
     value_col = [c for c in convar["columns"] if c["name"] == "value"][0]
     assert value_col["origin"].endswith("-redacted")
-    assert value_col["comment"].endswith("Redacted for steamworks_sessionid_server.")
+    assert value_col["comment"].endswith(
+        "Redacted for mp_guardian_bomb_plant_custom_x_mark_location,"
+        " steamworks_sessionid_server."
+    )
+
+
+def test_redacts_the_faceit_match_id_convar():
+    # FACEIT servers put their match id in this Guardian-mode setting
+    manifest = _manifest(("convar", ["round", "tick", "name", "value"]))
+    data = {
+        "convar": pd.DataFrame(
+            {
+                "round": [0, 0, 0],
+                "tick": [0, 0, 0],
+                "name": [
+                    "mp_guardian_bomb_plant_custom_x_mark_location",
+                    "mp_freezetime",
+                    # names are case-insensitive in the engine
+                    "MP_Guardian_Bomb_Plant_Custom_X_Mark_Location",
+                ],
+                "value": [
+                    "1-00000000-0000-0000-0000-000000000000-1-1",
+                    "15",
+                    "1-00000000-0000-0000-0000-000000000000-1-1",
+                ],
+            }
+        )
+    }
+
+    scrub_csds_pii(manifest, data)
+
+    assert list(data["convar"]["value"]) == ["redacted", "15", "redacted"]
+    assert list(data["convar"]["name"]) == [
+        "mp_guardian_bomb_plant_custom_x_mark_location",
+        "mp_freezetime",
+        "MP_Guardian_Bomb_Plant_Custom_X_Mark_Location",
+    ]
+
+
+def test_redacts_the_team_names_that_are_set():
+    manifest = _manifest(
+        ("team_info", ["round", "tick", "team_code", "clan_name", "flag"])
+    )
+    data = {
+        "team_info": pd.DataFrame(
+            {
+                "round": [0, 0, 1, 1],
+                "tick": [0, 0, 10, 10],
+                "team_code": pd.Series([2, 3, 2, 3], dtype="int32"),
+                "clan_name": ["team_somebody", "team_other", "", None],
+                "flag": ["", "", "", ""],
+            }
+        )
+    }
+
+    manifest = scrub_csds_pii(manifest, data)
+
+    ti = data["team_info"]
+    # FACEIT names a team after a player; an empty name (Valve) stays as sent
+    assert list(ti["clan_name"][:3]) == ["redacted", "redacted", ""]
+    assert pd.isna(ti["clan_name"].iat[3])
+    assert list(ti["team_code"]) == [2, 3, 2, 3]
+    team_info = manifest["channels"][0]
+    assert team_info["redacted"] is True
+    name_col = [c for c in team_info["columns"] if c["name"] == "clan_name"][0]
+    assert name_col["origin"].endswith("-redacted")
+    assert name_col["comment"].endswith("Redacted where set; empty stays empty.")
+    flag_col = [c for c in team_info["columns"] if c["name"] == "flag"][0]
+    assert flag_col["origin"] == "replay"
+
+
+def test_team_info_is_read_only_when_the_csds_has_it():
+    with_it = _manifest(("team_info", ["clan_name"]), ("header", ["demo_id"]))
+    without = _manifest(("header", ["demo_id"]))
+
+    assert {"channel": "team_info"} in csds_pii_channel_instructions(with_it)
+    assert {"channel": "team_info"} not in csds_pii_channel_instructions(without)
 
 
 def test_redacts_the_client_settings():
